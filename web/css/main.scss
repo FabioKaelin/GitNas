@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Mochiy+Pop+P+One&display=swap');
+
+:root{
+    --FontColor: white;
+}
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+    color: var(--FontColor, white);
+}
+hr {
+    border: 3px solid rgb(51, 80, 130);
+    border-radius: 100px;
+    background-color: rgb(51, 80, 130);
+}
+
+.headHr {
+    border: 5px solid rgb(77, 94, 172);
+}
+
+h1{
+    color: white;
+    text-decoration: none;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: rgb(41, 56, 66);
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(44, 70, 87);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(46, 83, 107);
+}
+
+
+input {
+    margin-left: 1px;
+    margin-right: 1px;
+    padding-left: 8px;
+    background-color: rgb(67, 103, 128);
+    border: none;
+    color: var(--FontColor, white);
+    border-color: transparent;
+    font-weight: bolder;
+    font-family: 'Mochiy Pop P One';
+    font-size: large;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-block;
+    height: 30px;
+}
+
+::placeholder{
+    color: rgb(152, 180, 196);
+}
+
+input:hover {
+    background-color: rgb(45, 80, 104);
+}
+
+button {
+    margin-left: 1px;
+    cursor: pointer;
+    margin-right: 1px;
+    background-color: rgb(49, 80, 101);
+    border: none;
+    color: var(--FontColor, white);
+    border-color: transparent;
+    font-weight: bolder;
+    font-family: 'Mochiy Pop P One';
+    font-size: large;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    height: 30px;
+}
+button:hover {
+    background-color: rgb(51, 94, 122);
+}
+
+body {
+    font-size: small;
+    padding: 0px;
+    overflow-x: hidden;
+    margin: 0px;
+    width: 100%;
+
+    /* font-family: 'Mochiy Pop One'; */
+    /* font-family: Arial, Helvetica; */
+    font-family: 'Mochiy Pop One';
+    background-color: rgb(41, 56, 66);
+}
+
+
+html {
+    background-color: rgb(41, 56, 66);
+    padding: 0px;
+    width: 95%;
+    margin: 0px;
+}
+
+
+#Fusszeile{
+    display: flex;
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100px;
+    background-color: rgb(24, 33, 39);
+    font-size:small;
+
+
+    div{
+        width: 33%;
+        padding: 10px;
+        background-color: rgba(49, 49, 49, 0.325);
+    }
+
+    div:nth-child(2){
+        background-color: rgba(0, 0, 0, 0.497);
+    }
+
+}
+
+
+
+#TitelSeiteObenNavbar{
+    position:fixed;
+    display: block;
+    transition: 39s;
+    background-color: rgba(39, 81, 111, 0.685);
+    right: 0px;
+    min-width: 40px;
+    min-height: 35px;
+    width: 40px;
+    height: 35px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-radius: 10px;
+
+    div{
+        background-color: rgba(39, 81, 111, 0.685);
+        right: 0px;
+        width: 41px;
+        justify-self:right;
+        position: absolute;
+        border-radius: 10px;
+        svg{
+            display: block;
+            right: 0px;
+            fill: lightblue
+
+        }
+    }
+
+
+    hr{
+        margin: 0px;
+        // display: none;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.2s, width 0.2s, height 0.2s linear;
+        background-color: rgba(37, 54, 66, 0);
+        border-color: rgba(37, 54, 66, 0);
+    }
+
+    button{
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.2s linear;
+    }
+
+
+
+}
+#TitelSeiteObenNavbar:hover{
+
+    display: block !important;
+    background-color: rgba(37, 54, 66, 0.637);
+    width: max-content;
+    height: max-content;
+    button{
+        // display: block;
+        visibility: visible;
+        opacity: 1;
+        position: block;
+    }
+    hr{
+        // display: block;
+        visibility: visible;
+        opacity: 1;
+        position: block;
+    }
+}
+
+#content {
+    padding-left: 1%;
+    padding-right:1%;
+    width: 100%;
+    height: 90%;
+}
+

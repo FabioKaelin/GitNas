@@ -1,0 +1,7 @@
+test.*
+test
+*.lnk
+repos
+output.txt
+.env
+__pycache__
