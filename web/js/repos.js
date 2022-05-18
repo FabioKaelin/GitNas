@@ -1,5 +1,5 @@
 repos = document.getElementById("repos")
-
+console.log("asdf")
 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
@@ -8,11 +8,22 @@ function removeAllChildNodes(parent) {
 }
 
 function updateDescription(){
+    allowExplorer = false
     console.log("update")
     newDescription = document.getElementById("newDescription").value
-    eel.updateDescription(document.getElementById("newDescription").getAttribute("currentRepo"), newDescription)
+    // Funktion zum Ausführen
+    // eel.updateDescription(document.getElementById("newDescription").getAttribute("currentRepo"), newDescription)
+    titlenode = document.getElementById("repos").childNodes
+    titlenode.forEach(element => {
+        if (element.childNodes[0].childNodes[0].innerHTML == document.getElementById("newDescription").getAttribute("currentRepo")){
+            element.childNodes[0].childNodes[1].innerHTML = newDescription
+        }
+    });
+    document.getElementById("descriptionUpdate").remove()
+    setTimeout(() => {
+        allowExplorer = true
+    }, 10);
 }
-
 
 eel.expose(displayRepositories)
 function displayRepositories(repositories) {
@@ -37,16 +48,15 @@ function displayRepositories(repositories) {
         imgBearbeiten = document.createElement("img");
         imgBearbeiten.setAttribute("src", "./images/icons/stift.svg");
         imgBearbeiten.setAttribute("alt", "bearbeiten");
+        allowExplorer = true
 
         imgBearbeiten.addEventListener("click", function(){
+            allowExplorer = false
             repos1 = document.getElementById("repos").childNodes
-            console.log(repos1)
-
-
             repos1.forEach(element1 => {
-                console.log(element1.childNodes[0].childNodes[0])
                 if (element1.childNodes[0].childNodes[0].innerHTML == element.name){
                     divElement = document.createElement("div")
+                    divElement.setAttribute("id", "descriptionUpdate")
                     inputElement = document.createElement("input")
                     inputElement.setAttribute("type", "text")
                     inputElement.setAttribute("name", "newDescription")
@@ -62,6 +72,10 @@ function displayRepositories(repositories) {
                     element1.childNodes[0].appendChild(divElement)
                 }
             });
+            setTimeout(() => {
+                allowExplorer = true
+            }, 10);
+
 
             // eel.updateDescription(element.name, "neue beschreibung")
         })
@@ -70,6 +84,12 @@ function displayRepositories(repositories) {
         textSpan.appendChild(pDescription)
         repoDiv.appendChild(textSpan)
         repoDiv.appendChild(imgBearbeiten)
+        repoDiv.addEventListener("click", function(){
+            if (allowExplorer){
+                window.location = "explorer.html"
+                eel.getStructureEEL(element.name)
+            }
+        })
         repos.appendChild(repoDiv)
     });
 

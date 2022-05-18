@@ -3,8 +3,15 @@ import os
 import paramiko
 from dotenv import load_dotenv
 import time
+from threading import Thread
 
 load_dotenv()
+
+icons = {
+    "py": "python",
+    "gitignore": "git",
+    "pyw": "python"
+}
 
 outputFile = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\output.txt"
 folder = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\repos"
@@ -107,13 +114,15 @@ def updateClone():
 def loadRepositories():
     global repositories
     repositories = []
-    print("vor ls")
+    # print("vor ls")
     RemoteRepos = execSSH("ls")
-    print("nach ls")
-    print(RemoteRepos)
+    # print("nach ls")
+    # print(RemoteRepos)
     for repo in RemoteRepos:
         repositories.append(Repository(repo.replace(".git", "")))
+        # print(repositories)
     print("loadRepositories returned")
+    # print(repositories)
     return repositories
 
 def getStructure(repo, path=""):
@@ -138,3 +147,7 @@ def replaceTags(text):
     text = text.replace("<", "&lt;")
     text = text.replace(">", "&gt;")
     return text
+repositories = []
+repositories = loadRepositories()
+cloneRepos = Thread(target=updateClone)
+cloneRepos.start()
