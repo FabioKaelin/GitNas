@@ -1,0 +1,96 @@
+#header {
+  width: 110%;
+  overflow: hidden;
+  height: 50px;
+  background-color: #1e272e;
+  padding: 10px;
+}
+
+#header img {
+  max-width: 200px;
+}
+
+#RepoMenue {
+  background-color: #1e272e;
+  margin-top: 10px;
+  margin-left: 5%;
+  padding: 1%;
+  width: 88%;
+  height: 5%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#repos {
+  margin-left: 5%;
+  padding: 1%;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  width: 88%;
+  background-color: #171f25;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#repos .repo {
+  background-color: #2e424f;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  font-size: xx-large;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  text-align: left;
+  margin-bottom: 10px;
+  width: 99%;
+  padding: 4px;
+  border-radius: 10px;
+}
+
+#repos .repo:hover {
+  background-color: #2f4a5d;
+}
+
+#repos .repo span {
+  left: 0px;
+}
+
+#repos .repo span .title {
+  overflow-x: auto;
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+#repos .repo span .description {
+  color: #8ea5ad;
+  font-size: medium;
+  margin: 0px;
+}
+
+#repos .repo img {
+  position: relative;
+  right: 0px;
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  margin-left: 10%;
+  border-radius: 5px;
+}
+
+#repos .repo img:hover {
+  background-color: #405563;
+}
+/*# sourceMappingURL=repos.css.map */

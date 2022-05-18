@@ -1,0 +1,59 @@
+#header {
+  width: 110%;
+  overflow: hidden;
+  height: 50px;
+  background-color: #1e272e;
+  padding: 10px;
+}
+
+#header img {
+  max-width: 200px;
+}
+
+#header #path {
+  font-size: xx-large;
+}
+
+#header #path a {
+  text-decoration: none;
+  color: #7e9aa5;
+}
+
+#header #path a:hover {
+  font-weight: bold;
+  color: #afc4cc;
+}
+
+#EditorMenue {
+  background-color: #1e272e;
+  margin-top: 10px;
+  margin-left: 5%;
+  padding: 1%;
+  width: 88%;
+  height: 5%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#editor {
+  margin-left: 5%;
+  padding: 1%;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  width: 88%;
+  background-color: #171f25;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.copy-to-clipboard-button {
+  height: -webkit-min-content;
+  height: -moz-min-content;
+  height: min-content;
+}
+
+.line-numbers span.line-numbers-rows {
+  margin-top: -1px;
+}
+/*# sourceMappingURL=editor.css.map */

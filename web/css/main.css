@@ -1,0 +1,232 @@
+@import url("https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Mochiy+Pop+P+One&display=swap");
+:root {
+  --FontColor: white;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  color: var(--FontColor, white);
+}
+
+hr {
+  border: 3px solid #335082;
+  border-radius: 100px;
+  background-color: #335082;
+}
+
+.headHr {
+  border: 5px solid #4d5eac;
+}
+
+h1 {
+  color: white;
+  text-decoration: none;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #293842;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 5px grey;
+          box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2c4657;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2e536b;
+}
+
+input {
+  margin-left: 1px;
+  margin-right: 1px;
+  padding-left: 8px;
+  background-color: #436780;
+  border: none;
+  color: var(--FontColor, white);
+  border-color: transparent;
+  font-weight: bolder;
+  font-family: 'Mochiy Pop P One';
+  font-size: large;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-block;
+  height: 30px;
+}
+
+::-webkit-input-placeholder {
+  color: #98b4c4;
+}
+
+:-ms-input-placeholder {
+  color: #98b4c4;
+}
+
+::-ms-input-placeholder {
+  color: #98b4c4;
+}
+
+::placeholder {
+  color: #98b4c4;
+}
+
+input:hover {
+  background-color: #2d5068;
+}
+
+button {
+  margin-left: 1px;
+  cursor: pointer;
+  margin-right: 1px;
+  background-color: #315065;
+  border: none;
+  color: var(--FontColor, white);
+  border-color: transparent;
+  font-weight: bolder;
+  font-family: 'Mochiy Pop P One';
+  font-size: large;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  height: 30px;
+}
+
+button:hover {
+  background-color: #335e7a;
+}
+
+body {
+  font-size: small;
+  padding: 0px;
+  overflow-x: hidden;
+  margin: 0px;
+  width: 100%;
+  /* font-family: 'Mochiy Pop One'; */
+  /* font-family: Arial, Helvetica; */
+  font-family: 'Mochiy Pop One';
+  background-color: #293842;
+}
+
+html {
+  background-color: #293842;
+  padding: 0px;
+  width: 95%;
+  margin: 0px;
+}
+
+#Fusszeile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100px;
+  background-color: #182127;
+  font-size: small;
+}
+
+#Fusszeile div {
+  width: 33%;
+  padding: 10px;
+  background-color: rgba(49, 49, 49, 0.325);
+}
+
+#Fusszeile div:nth-child(2) {
+  background-color: rgba(0, 0, 0, 0.497);
+}
+
+#TitelSeiteObenNavbar {
+  position: fixed;
+  display: block;
+  -webkit-transition: 39s;
+  transition: 39s;
+  background-color: rgba(39, 81, 111, 0.685);
+  right: 0px;
+  min-width: 40px;
+  min-height: 35px;
+  width: 40px;
+  height: 35px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  border-radius: 10px;
+}
+
+#TitelSeiteObenNavbar div {
+  background-color: rgba(39, 81, 111, 0.685);
+  right: 0px;
+  width: 41px;
+  -ms-grid-column-align: right;
+      justify-self: right;
+  position: absolute;
+  border-radius: 10px;
+}
+
+#TitelSeiteObenNavbar div svg {
+  display: block;
+  right: 0px;
+  fill: lightblue;
+}
+
+#TitelSeiteObenNavbar hr {
+  margin: 0px;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: visibility 0s, opacity 0.2s, width 0.2s, height 0.2s linear;
+  transition: visibility 0s, opacity 0.2s, width 0.2s, height 0.2s linear;
+  background-color: rgba(37, 54, 66, 0);
+  border-color: rgba(37, 54, 66, 0);
+}
+
+#TitelSeiteObenNavbar button {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: visibility 0s, opacity 0.2s linear;
+  transition: visibility 0s, opacity 0.2s linear;
+}
+
+#TitelSeiteObenNavbar:hover {
+  display: block !important;
+  background-color: rgba(37, 54, 66, 0.637);
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+
+#TitelSeiteObenNavbar:hover button {
+  visibility: visible;
+  opacity: 1;
+  position: block;
+}
+
+#TitelSeiteObenNavbar:hover hr {
+  visibility: visible;
+  opacity: 1;
+  position: block;
+}
+
+#content {
+  padding-left: 1%;
+  padding-right: 1%;
+  width: 100%;
+  height: 90%;
+}
+/*# sourceMappingURL=main.css.map */
