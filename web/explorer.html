@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitNas - Explorer</title>
+    <link rel="stylesheet" href="./css/explorer.css">
+    <link rel="stylesheet" href="./css/DarkBlue.css">
+</head>
+
+<body>
+    <div id="header">
+        <img src="./images/Schriftzug.png" alt="GitNas">
+        <!-- img wird zu link zu Repoübersicht/home -->
+        <span id="path">/ <a href="#">GitNas</a></span>
+    </div>
+
+
+    <div id="content">
+        <div id="ExplorerMenue">
+            <button id="ShowCode">Code</button>
+            <div id="CodeContent" style="display: none;">
+                <div>
+                    URL: <code onclick="CopyToClipboard('CodeContentURL')" id="CodeContentURL">git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
+                </div>
+                <hr>
+                <div>
+                    Remote: <code onclick="CopyToClipboard('CodeContentRemote')" id="CodeContentRemote">git add remote git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
+                </div>
+                <hr>
+                <div>
+                    Clone: <code onclick="CopyToClipboard('CodeContentClone')" id="CodeContentClone">git clone git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
+                </div>
+            </div>
+        </div>
+        <!-- <hr class="hearHr" style="margin-left: 5%; width: 89.5%;"> -->
+        <div id="explorer">
+            <div class="explorerContent">
+                <span class="explorerContentHead">
+                    <img src="./images/icons/folder.svg" alt="">
+                    <span>vorbild</span>
+                </span>
+
+                <span class="lastUpdate">
+                    17.05.2022 14:27
+                </span>
+            </div>
+            <div class="explorerContent">
+                <span class="explorerContentHead">
+                    <img src="./images/icons/python.svg" alt="">
+                    <span>functions.py</span>
+                </span>
+
+                <span class="lastUpdate">
+                    17.05.2022 14:45
+                </span>
+            </div>
+            <div class="explorerContent">
+                <span class="explorerContentHead">
+                    <img src="./images/icons/git.svg" alt="">
+                    <span>.gitignore</span>
+                </span>
+
+                <span class="lastUpdate">
+                    17.05.2022 15:44
+                </span>
+            </div>
+        </div>
+    </div>
+    <script src="./js/explorer.js"></script>
+</body>
+
+</html>

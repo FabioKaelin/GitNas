@@ -1,0 +1,137 @@
+#header {
+    width: 110%;
+    overflow: hidden;
+    height: 50px;
+    background-color: rgb(30, 39, 46);
+    padding: 10px;
+
+    img {
+        max-width: 200px;
+    }
+
+    #path{
+        font-size: xx-large;
+        a{
+            text-decoration: none;
+            color: rgb(126, 154, 165);
+        }
+        a:hover{
+            font-weight: bold;
+            color: rgb(175, 196, 204);
+        }
+    }
+}
+
+#ExplorerMenue {
+    background-color: rgb(30, 39, 46);
+    margin-top: 10px;
+    margin-left: 5%;
+    padding: 1%;
+    // border-radius: 10px;
+    width: 88%;
+    height: 5%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    #CodeContent{
+        overflow-x:auto;
+        white-space: nowrap;
+        word-break: keep-all;
+        padding: 10px;
+        width: 400px;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        background-color: rgb(16, 42, 59);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: -4px -2px 10px -1px #000000;
+
+        hr{
+            position:sticky;
+            left: 0px;
+        }
+
+        code{
+            background-color: rgb(68, 85, 99);
+            font-size: large;
+            padding: 2px;
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-left: 5px;
+        }
+    }
+}
+
+#explorer {
+    margin-left: 5%;
+    padding: 1%;
+    // border-radius: 10px;
+    height: max-content;
+    width: 88%;
+    background-color: rgb(23, 31, 37);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    .explorerContent {
+        background-color: rgb(46, 66, 79);
+        display: flex;
+        flex-direction: row;
+        align-content: flex-start;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        font-size: xx-large;
+        height: fit-content;
+        text-align: left;
+        margin-bottom: 10px;
+        // height: 50px;
+        width: 99%;
+        padding: 4px;
+        border-radius: 10px;
+
+        &:hover {
+            background-color: rgb(47, 74, 93);
+        }
+
+        .explorerContentHead{
+            display: flex;
+            flex-direction: row;
+            align-content: flex-end;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            width: 80%;
+
+
+            img {
+                z-index: 0;
+                position: relative;
+                right: 0px;
+                width: 35px;
+                height: 35px;
+                padding: 5px;
+                border-radius: 5px;
+
+                &:hover {
+                    background-color: rgb(64, 85, 99);
+                }
+            }
+
+            span{
+                overflow-x: auto;
+                white-space: nowrap;
+                word-break: keep-all;
+            }
+        }
+
+
+
+
+        .lastUpdate {
+            color: rgb(142, 165, 173);
+            font-size: medium;
+            margin: 0px;
+            height: min-content;
+        }
+    }
+}

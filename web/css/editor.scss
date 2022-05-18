@@ -1,0 +1,67 @@
+#header {
+    width: 110%;
+    overflow: hidden;
+    height: 50px;
+    background-color: rgb(30, 39, 46);
+    padding: 10px;
+
+    img {
+        max-width: 200px;
+    }
+
+    #path{
+        font-size: xx-large;
+        a{
+            text-decoration: none;
+            color: rgb(126, 154, 165);
+        }
+        a:hover{
+            font-weight: bold;
+            color: rgb(175, 196, 204);
+        }
+    }
+}
+
+#EditorMenue {
+    background-color: rgb(30, 39, 46);
+    margin-top: 10px;
+    margin-left: 5%;
+    padding: 1%;
+    // border-radius: 10px;
+    width: 88%;
+    height: 5%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#editor {
+    margin-left: 5%;
+    padding: 1%;
+    height: max-content;
+    width: 88%;
+    background-color: rgb(23, 31, 37);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+.copy-to-clipboard-button{
+    height: min-content;
+}
+
+.line-numbers span.line-numbers-rows {
+    margin-top: -1px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

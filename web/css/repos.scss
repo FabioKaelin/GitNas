@@ -1,0 +1,89 @@
+#header {
+    width: 110%;
+    overflow: hidden;
+    height: 50px;
+    background-color: rgb(30, 39, 46);
+    padding: 10px;
+
+    img {
+        max-width: 200px;
+
+    }
+}
+
+#RepoMenue {
+    background-color: rgb(30, 39, 46);
+    margin-top: 10px;
+    margin-left: 5%;
+    padding: 1%;
+    // border-radius: 10px;
+    width: 88%;
+    height: 5%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#repos {
+    margin-left: 5%;
+    padding: 1%;
+    // border-radius: 10px;
+    height: max-content;
+    width: 88%;
+    background-color: rgb(23, 31, 37);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    .repo {
+        background-color: rgb(46, 66, 79);
+        display: flex;
+        flex-direction: row;
+        align-content: flex-start;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        font-size: xx-large;
+        height: fit-content;
+        text-align: left;
+        margin-bottom: 10px;
+        // height: 50px;
+        width: 99%;
+        padding: 4px;
+        border-radius: 10px;
+
+        &:hover {
+            background-color: rgb(47, 74, 93);
+        }
+
+        span {
+            left: 0px;
+
+            .title {
+                overflow-x: auto;
+                white-space: nowrap;
+                word-break: keep-all;
+            }
+
+
+            .description {
+                color: rgb(142, 165, 173);
+                font-size: medium;
+                margin: 0px;
+            }
+        }
+
+
+
+        img {
+            position: relative;
+            right: 0px;
+            width: 35px;
+            height: 35px;
+            padding: 5px;
+            margin-left: 10%;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: rgb(64, 85, 99);
+            }
+        }
+    }
+}
