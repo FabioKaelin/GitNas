@@ -2,7 +2,7 @@ const CodeButton = document.getElementById("ShowCode")
 document.addEventListener("click", function(){
     document.getElementById("CodeContent").style.display = "none"
 })
-
+console.log(CodeButton)
 CodeButton.addEventListener("click", function(){
 
     setTimeout(() => {
@@ -24,26 +24,20 @@ function removeAllChildNodes(parent) {
     }
 }
 
-/*
-<div class="explorerContent">
-    <span class="explorerContentHead">
-        <img src="./images/icons/folder.svg" alt="">
-        <span>vorbild</span>
-    </span>
+eel.getStructureEEL()
 
-    <span class="lastUpdate">
-        17.05.2022 14:27
-    </span>
-</div>
-*/
-eel.getStructureEEL("GitNas")
+
 setTimeout(() => {
+
+
     eel.expose(displayStructure);
     function displayStructure(input) {
         removeAllChildNodes(explorer);
+        console.log("DisplayStructure")
         structure = input;
 
         structure.forEach(element => {
+            console.log(element)
             explorerContent = document.createElement("div")
             explorerContent.setAttribute("class", "explorerContent")
 

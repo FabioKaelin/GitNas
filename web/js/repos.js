@@ -87,7 +87,7 @@ function displayRepositories(repositories) {
         repoDiv.addEventListener("click", function(){
             if (allowExplorer){
                 window.location = "explorer.html"
-                eel.getStructureEEL(element.name)
+                eel.setPosition(element.name)
             }
         })
         repos.appendChild(repoDiv)

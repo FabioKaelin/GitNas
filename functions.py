@@ -109,7 +109,10 @@ def updateClone():
             execCommandInFolder("git clone " + getClone(repo))
 
         newRepo.loadCommits()
-        repositories.append(newRepo)
+        for index,repo1 in enumerate(repositories):
+            if repo1.name == repo.replace(".git", ""):
+                repositories.remove(repo1)
+                repositories.append(newRepo)
 
 def loadRepositories():
     global repositories
@@ -118,6 +121,8 @@ def loadRepositories():
     RemoteRepos = execSSH("ls")
     # print("nach ls")
     # print(RemoteRepos)
+    repositories = []
+    print(repositories)
     for repo in RemoteRepos:
         repositories.append(Repository(repo.replace(".git", "")))
         # print(repositories)
@@ -147,6 +152,7 @@ def replaceTags(text):
     text = text.replace("<", "&lt;")
     text = text.replace(">", "&gt;")
     return text
+
 repositories = []
 repositories = loadRepositories()
 cloneRepos = Thread(target=updateClone)

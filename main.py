@@ -3,7 +3,7 @@ from functions import *
 import os
 
 eel.init('web')
-
+position = ["", ""]
 # @eel.expose
 # def allBranches():
 #     # eel.allBranches(updateBranch())
@@ -17,11 +17,18 @@ def updateDescription(name, description):
             break
 
 @eel.expose
-def getStructureEEL(repo, path=""):
-    # updateClone
+def setPosition(repo, path=""):
+    global position
+    position = [repo, path]
+
+@eel.expose
+def print1(input):
+    print(input)
+
+@eel.expose
+def getStructureEEL():
     cloneRepos.join()
-    structure = getStructure(repo, path)
-    # print(structure)
+    structure = getStructure(position[0], position[1])
     structurejs = []
     for element in structure:
         elementjs = []
@@ -38,21 +45,16 @@ def getStructureEEL(repo, path=""):
             else:
                 elementjs.append("file" + ".svg")
         structurejs.append(elementjs)
-    print(structurejs)
-    time.sleep(0.03)
     eel.displayStructure(structurejs)
 
 
 @eel.expose
 def loadRepositoriesFunc():
     repositoriesJs = []
-    print("------")
     print(repositories)
-    print(repositoriesJs)
-    print("---------")
     for element in repositories:
         repositoriesJs.append({"name": element.name, "description": element.description})
     eel.displayRepositories(repositoriesJs)
     # return repositoriesJs
 
-eel.start('repos.html', port=9898)
+eel.start('repos.html', port=9898, size=(800,600))
