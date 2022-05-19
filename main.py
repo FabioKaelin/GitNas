@@ -17,9 +17,21 @@ def updateDescription(name, description):
             break
 
 @eel.expose
-def setPosition(repo, path=""):
+def setPosition(repo, path="", iffolder=True):
     global position
-    position = [repo, path]
+    print(path)
+
+    if path[0:1] == "/":
+        position = [repo, path[1:]]
+    else:
+        position = [repo, path]
+    if not iffolder:
+        print("location editor")
+        eel.setLocation("editor.html")
+    else:
+        eel.setLocation("explorer.html")
+    print("repo:'"+repo + "' path:'" + path + "' iffolder:'" + str(iffolder) + "'")
+
 
 @eel.expose
 def print1(input):
@@ -29,6 +41,7 @@ def print1(input):
 def getStructureEEL():
     cloneRepos.join()
     structure = getStructure(position[0], position[1])
+    # structure = getStructure(position[0], position[1])
     structurejs = []
     for element in structure:
         elementjs = []
@@ -40,13 +53,18 @@ def getStructureEEL():
             extensionName = element[0].split(".")[-1:][0]
 
             if (extensionName in icons):
-
                 elementjs.append(icons[extensionName] + ".svg")
             else:
                 elementjs.append("file" + ".svg")
+        elementjs.append(element[1])
         structurejs.append(elementjs)
-    eel.displayStructure(structurejs)
+    eel.displayStructure([ position, structurejs])
 
+
+@eel.expose
+def eelGetPath():
+    print(position)
+    return [position[0], position[1]]
 
 @eel.expose
 def loadRepositoriesFunc():
