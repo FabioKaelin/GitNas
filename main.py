@@ -38,6 +38,22 @@ def print1(input):
     print(input)
 
 @eel.expose
+def getCloneEEL():
+    global position
+    reponame = position[0]
+    url = getClone(reponame)
+    cloneUrl = "git clone " + url
+    remoteUrl = "git add remote nas "+ url
+    pushCommand = "git push -u nas main"
+    jsonObject = {
+        "Url": url,
+        "Clone": cloneUrl,
+        "Remote": remoteUrl,
+        "Push": pushCommand
+        }
+    return jsonObject
+
+@eel.expose
 def getStructureEEL():
     cloneRepos.join()
     structure = getStructure(position[0], position[1])
@@ -60,6 +76,13 @@ def getStructureEEL():
         structurejs.append(elementjs)
     eel.displayStructure([ position, structurejs])
 
+@eel.expose
+def getFileEEL():
+    global position
+    input = getFile(position[0], position[1])
+    text = replaceTags(input[0])
+
+    return [text, input[1], input[2]]
 
 @eel.expose
 def eelGetPath():

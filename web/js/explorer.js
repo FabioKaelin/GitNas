@@ -1,3 +1,15 @@
+eel.getCloneEEL()(function(input){
+    console.log(input)
+    document.getElementById("CodeContentURL").innerHTML = input.Url
+    document.getElementById("CodeContentRemote").innerHTML = input.Remote
+    document.getElementById("CodeContentClone").innerHTML = input.Clone
+    document.getElementById("CodeContentPush").innerHTML = input.Push
+})
+
+
+
+
+
 const CodeButton = document.getElementById("ShowCode")
 document.addEventListener("click", function(){
     document.getElementById("CodeContent").style.display = "none"

@@ -13,6 +13,9 @@ icons = {
     "pyw": "python"
 }
 
+imageTypes = ["png", "jpng", "gif"]
+binTypes = ["docs", "xlsx", "ppx"]
+
 outputFile = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\output.txt"
 folder = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\repos"
 repositories = []
@@ -96,7 +99,7 @@ def execSSH(command):
     return output
 
 def getClone(name):
-    return "ssh://"+router_username+"@"+router_ip+":/volume1/GitNas/repository/" + name
+    return "ssh://"+router_username+"@"+router_ip+":/volume1/GitNas/repository/" + name + ".git"
 
 def updateClone():
     RemoteRepos = execSSH("ls")
@@ -143,12 +146,16 @@ def getStructure(repo, path=""):
 def getFile(repo, path=""):
     position = [repo, path]
     positionString = os.path.join(folder, position[0], position[1])
+
     with open(positionString, 'r', encoding='UTF-8') as file:
         content = file.read()
+    with open(positionString, 'r', encoding='UTF-8') as file:
+        lines = len(file.readlines())
     extensionName = path.split(".")[-1:][0]
-    return [content, extensionName]
+    return [content, extensionName, lines]
 
 def replaceTags(text):
+    text = text.replace(";", "&nbsp;")
     text = text.replace("<", "&lt;")
     text = text.replace(">", "&gt;")
     return text

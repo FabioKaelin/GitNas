@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitNas - Editor</title>
+    <link rel="icon" type="image/x-icon" href="./images/logo/logo.png">
     <link rel="stylesheet" href="./css/editor.css">
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/syntax/prism.css">
@@ -22,152 +23,17 @@
 
     <div id="content">
         <div id="EditorMenue">
-            685 lines 22.2 KB
+            <span id="lines">685</span> lines / 22.2 KB
         </div>
         <div id="editor">
             <!-- <pre><code class="language-markdown line-numbers"> -->
-            <pre><code class="language-py line-numbers">
-import codecs
-import os
-import shutil
-import paramiko
-from dotenv import load_dotenv
-
-load_dotenv()
-
-outputFile = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\Nas\\GitNas\\output.txt"
-folder = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\Nas\\GitNas\\repos"
-repositories = []
-
-router_ip = os.getenv('ROUTER_IP')
-router_username = os.getenv('ROUTER_USERNAME')
-router_password = os.getenv('ROUTER_PASSWORD')
-
-class Repository:
-    def __init__(self, name):
-        self.name = name
-        self.path = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\Nas\\GitNas\\repos\\" + name + ".git"
-        self.commits = []
-        self.description = execSSH("cd " + self.name + ".git; cat description")[0]
-
-    def load(self):
-        RemoteRepos = execSSH("ls")
-        localRepos = execCommandInFolder("dir /a /B").split("\n")[:-1]
-        self.description = execSSH("cd " + self.name + ".git; cat description")[0]
-        if self.name in localRepos:
-            execCommandInRepo(self.name, "git pull")
-        else:
-            execCommandInFolder("git clone " + getClone(self.name))
-
-    def loadCommits(self):
-        self.commits=[]
-        content = execCommandInRepo(self.name, "git log --format=oneline").split("\n")[:-1]
-        for commit in content:
-            commitList = commit.split(" ", 1)
-            commit = Commit()
-            commit.hash = commitList[0]
-            commit.message = commitList[1]
-            self.commits.append(commit)
-
-    def getClone(self):
-        return getClone(self.name)
-
-    def setDescription(self, description):
-        execSSH("echo '" + description + "' > " + self.name + ".git/description")
-        self.description = description
-
-    def __repr__(self):
-        return '&lt;Repo name='+self.name+'>'
-
-class Commit:
-    def __init__(self):
-        self.hash = ""
-        self.message = ""
-        self.date = ""
-    def __repr__(self):
-        return '&lt;Commit message='+ self.message+'>'
-
-
-def execCommandInFolder(command):
-    os.system('cd "' + folder.replace("/", "\\") + '"' + " & "+ command +" > " + outputFile + " &")
-    with open(outputFile, 'r', encoding='UTF-8') as file:
-        content = file.read()
-    return content
-
-def execCommandInRepo(repo, command):
-    os.system('cd "' + folder.replace("/", "\\") + '\\' + repo + '"' + " & "+ command + "> " + outputFile + " &")
-    # execCommandInFolder(command+" > " + outputFile)
-    with open(outputFile, 'r', encoding='UTF-8') as file:
-        content = file.read()
-    return content
-
-def execSSH(command):
-    ssh = paramiko.SSHClient()
-
-    ssh.load_system_host_keys()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(router_ip,
-                username=router_username,
-                password=router_password,
-                look_for_keys=False)
-
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd /;cd volume1/GitNas/repository; " + command)
-    output = []
-    for line in ssh_stdout.readlines():
-        output.append(line.replace("\n", ""))
-    return output
-
-def getClone(name):
-    return "ssh://"+router_username+"@"+router_ip+":/volume1/GitNas/repository/" + name
-
-def updateClone():
-    RemoteRepos = execSSH("ls")
-    localRepos = execCommandInFolder("dir /a /B").split("\n")[:-1]
-    for repo in RemoteRepos:
-        newRepo = Repository(repo.replace(".git", ""))
-        if repo.replace(".git", "") in localRepos:
-            execCommandInRepo(repo.replace(".git",""), "git pull")
-        else:
-            execCommandInFolder("git clone " + getClone(repo))
-
-        newRepo.loadCommits()
-        repositories.append(newRepo)
-
-def loadRepositories():
-    global repositories
-    RemoteRepos = execSSH("ls")
-    for repo in RemoteRepos:
-        newRepo = Repository(repo.replace(".git", ""))
-        repositories.append(newRepo)
-
-def getStructure(repo, path=""):
-    position = [repo, path]
-    positionString = os.path.join(folder, position[0], position[1])
-    content = os.listdir(positionString)
-    structure = []
-    for file in content:
-        if (file != ".git"):
-            structure.append([file, os.path.isdir(os.path.join(folder, position[0], position[1], file))])
-    return structure
-
-def getFile(repo, path=""):
-    position = [repo, path]
-    positionString = os.path.join(folder, position[0], position[1])
-    with open(positionString, 'r', encoding='UTF-8') as file:
-        content = file.read()
-    return [content, path.split(".")[-1:][0]]
-
-def replaceTags(text):
-    text = text.replace("<code", "&lt;")
-    text = text.replace(">", "&gt;")
-    return text
-
+            <pre id="prePreview"><code id="codePreview">
             </code></pre>
         </div>
     </div>
     <script src="./js/main.js"></script>
     <script src="./js/editor.js"></script>
-    <script src="./js/syntax/prism.js"></script>
+    <!-- <script src="./js/syntax/prism.js"></script> -->
 </body>
 
 </html>
