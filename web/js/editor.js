@@ -49,6 +49,9 @@ eel.getFileEEL()(function(input){
     console.log("input")
     codeDiv = document.createElement("code")
     codeDiv.setAttribute("id", "codePreview")
+    if (input[1] == "pyw"){
+        input[1] = "py"
+    }
     codeDiv.setAttribute("class", "line-numbers language-" + input[1])
     codeDiv.innerHTML = input[0]
     document.getElementById("prePreview").appendChild(codeDiv)
@@ -61,6 +64,7 @@ eel.getFileEEL()(function(input){
     // content
     document.getElementById("content").appendChild(script)
     document.getElementById("lines").innerHTML = input[2]
+    document.getElementById("size").innerHTML = input[3]
 
 
 })

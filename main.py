@@ -17,20 +17,38 @@ def updateDescription(name, description):
             break
 
 @eel.expose
+def getRepoNames():
+    RemoteRepos = execSSH("ls")
+    repositories1 = []
+    for repo in RemoteRepos:
+        repositories1.append(repo.replace(".git", "").lower())
+    return repositories1
+
+@eel.expose
+def createRepo(name, beschreibung):
+    print(name, beschreibung)
+    execSSH("git init --bare "+ name + ".git")
+    execSSH("echo '" + beschreibung + "' > " + name + ".git/description")
+    global repositories
+    repositories = []
+    repositories = loadRepositories()
+    cloneRepos = Thread(target=updateClone)
+    cloneRepos.start()
+
+
+@eel.expose
 def setPosition(repo, path="", iffolder=True):
     global position
-    print(path)
+    print("Position: "+ str(repo)+"/"+ str(path))
 
     if path[0:1] == "/":
         position = [repo, path[1:]]
     else:
         position = [repo, path]
     if not iffolder:
-        print("location editor")
         eel.setLocation("editor.html")
     else:
         eel.setLocation("explorer.html")
-    print("repo:'"+repo + "' path:'" + path + "' iffolder:'" + str(iffolder) + "'")
 
 
 @eel.expose
@@ -82,11 +100,10 @@ def getFileEEL():
     input = getFile(position[0], position[1])
     text = replaceTags(input[0])
 
-    return [text, input[1], input[2]]
+    return [text, input[1], input[2], input[3]]
 
 @eel.expose
 def eelGetPath():
-    print(position)
     return [position[0], position[1]]
 
 @eel.expose

@@ -12,7 +12,7 @@ function updateDescription(){
     console.log("update")
     newDescription = document.getElementById("newDescription").value
     // Funktion zum Ausführen
-    // eel.updateDescription(document.getElementById("newDescription").getAttribute("currentRepo"), newDescription)
+    eel.updateDescription(document.getElementById("newDescription").getAttribute("currentRepo"), newDescription)
     titlenode = document.getElementById("repos").childNodes
     titlenode.forEach(element => {
         if (element.childNodes[0].childNodes[0].innerHTML == document.getElementById("newDescription").getAttribute("currentRepo")){
@@ -56,6 +56,12 @@ function displayRepositories(repositories) {
             repos1.forEach(element1 => {
                 if (element1.childNodes[0].childNodes[0].innerHTML == element.name){
                     divElement = document.createElement("div")
+                    divElement.addEventListener("click", function(){
+                        allowExplorer = false
+                        setTimeout(() => {
+                            allowExplorer = true
+                        }, 10);
+                    })
                     divElement.setAttribute("id", "descriptionUpdate")
                     inputElement = document.createElement("input")
                     inputElement.setAttribute("type", "text")

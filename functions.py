@@ -10,6 +10,7 @@ load_dotenv()
 icons = {
     "py": "python",
     "gitignore": "git",
+    "git": "git",
     "pyw": "python",
     "md": "markdown",
     "svg": "svg",
@@ -100,17 +101,18 @@ class Commit:
 
 
 def execCommandInFolder(command):
-    os.system('cd "' + folder.replace("/", "\\") + '"' + " & "+ command +" > " + outputFile + " &")
+    os.system('cd "' + folder.replace("/", "\\") + '"' + " & "+ command +" > " + outputFile + " 2>nul")
     with open(outputFile, 'r', encoding='UTF-8') as file:
         content = file.read()
     return content
 
 def execCommandInRepo(repo, command):
-    os.system('cd "' + folder.replace("/", "\\") + '\\' + repo + '"' + " & "+ command + "> " + outputFile + " &")
+    os.system('cd "' + folder.replace("/", "\\") + '\\' + repo + '"' + " & "+ command + "> " + outputFile + " 2>nul")
     # execCommandInFolder(command+" > " + outputFile)
     with open(outputFile, 'r', encoding='UTF-8') as file:
         content = file.read()
     return content
+
 
 def execSSH(command):
     ssh = paramiko.SSHClient()
@@ -137,9 +139,9 @@ def updateClone():
     for repo in RemoteRepos:
         newRepo = Repository(repo.replace(".git", ""))
         if repo.replace(".git", "") in localRepos:
-            execCommandInRepo(repo.replace(".git",""), "git pull")
+            execCommandInRepo(repo.replace(".git",""), "git pull  > /dev/null")
         else:
-            execCommandInFolder("git clone " + getClone(repo))
+            execCommandInFolder("git clone " + getClone(repo.replace(".git","")) + "  > /dev/null")
 
         newRepo.loadCommits()
         for index,repo1 in enumerate(repositories):
@@ -150,17 +152,10 @@ def updateClone():
 def loadRepositories():
     global repositories
     repositories = []
-    # print("vor ls")
     RemoteRepos = execSSH("ls")
-    # print("nach ls")
-    # print(RemoteRepos)
     repositories = []
-    print(repositories)
     for repo in RemoteRepos:
         repositories.append(Repository(repo.replace(".git", "")))
-        # print(repositories)
-    print("loadRepositories returned")
-    # print(repositories)
     return repositories
 
 def getStructure(repo, path=""):
@@ -182,7 +177,22 @@ def getFile(repo, path=""):
     with open(positionString, 'r', encoding='UTF-8') as file:
         lines = len(file.readlines())
     extensionName = path.split(".")[-1:][0]
-    return [content, extensionName, lines]
+    size = os.path.getsize(positionString)
+    sizeString = ""
+    if (size < 1024):
+        sizeString = str(round(size, 2))+" B"
+    else:
+        size = size / 1024
+        if (size < 1024):
+            sizeString = str(round(size, 2))+" KB"
+        else:
+            size = size / 1024
+            if (size < 1024):
+                sizeString = str(round(size, 2))+" MB"
+            else:
+                size = size / 1024
+                sizeString = str(round(size, 2))+" GB"
+    return [content, extensionName, lines, sizeString]
 
 def replaceTags(text):
     text = text.replace(";", "&nbsp;")
