@@ -67,9 +67,9 @@ class Repository:
         localRepos = execCommandInFolder("dir /a /B").split("\n")[:-1]
         self.description = execSSH("cd " + self.name + ".git; cat description")[0]
         if self.name in localRepos:
-            execCommandInRepo(self.name, "git pull")
+            execCommandInRepoOhne(self.name, "git pull")
         else:
-            execCommandInFolder("git clone " + getClone(self.name))
+            execCommandInFolderOhne("git clone " + getClone(self.name))
 
     def loadCommits(self):
         self.commits=[]
@@ -108,11 +108,17 @@ def execCommandInFolder(command):
 
 def execCommandInRepo(repo, command):
     os.system('cd "' + folder.replace("/", "\\") + '\\' + repo + '"' + " & "+ command + "> " + outputFile + " 2>nul")
+    # os.system('cd "' + folder.replace("/", "\\") + '\\' + repo + '"' + " & "+ command + "> " + outputFile + " 2>nul")
     # execCommandInFolder(command+" > " + outputFile)
     with open(outputFile, 'r', encoding='UTF-8') as file:
         content = file.read()
     return content
 
+def execCommandInFolderOhne(command):
+    os.system('cd "' + folder.replace("/", "\\") + '"' + " & "+ command + " >nul 2>nul")
+
+def execCommandInRepoOhne(repo, command):
+    os.system('cd "' + folder.replace("/", "\\") + '\\' + repo + '"' + " & "+ command + " >nul 2>nul")
 
 def execSSH(command):
     ssh = paramiko.SSHClient()
@@ -139,9 +145,9 @@ def updateClone():
     for repo in RemoteRepos:
         newRepo = Repository(repo.replace(".git", ""))
         if repo.replace(".git", "") in localRepos:
-            execCommandInRepo(repo.replace(".git",""), "git pull  > /dev/null")
+            execCommandInRepoOhne(repo.replace(".git",""), "git pull")
         else:
-            execCommandInFolder("git clone " + getClone(repo.replace(".git","")) + "  > /dev/null")
+            execCommandInFolderOhne("git clone " + getClone(repo.replace(".git","")))
 
         newRepo.loadCommits()
         for index,repo1 in enumerate(repositories):

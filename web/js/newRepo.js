@@ -22,7 +22,19 @@ function createNewRepo() {
 
     beschreibung1 = document.getElementById("beschreibung").value
     console.log(beschreibung1)
-    eel.createRepo(name1, beschreibung1)
+    document.getElementById("create").disabled = true
+    document.getElementById("reset").disabled = true
+    document.getElementById("create").style.display = "none"
+    document.getElementById("reset").style.display = "none"
+
+
+    loader = document.createElement("div")
+    loader.setAttribute("class", "loader")
+    document.getElementById("NewRepo").appendChild(loader)
+
+    // eel.createRepo(name1, beschreibung1)(function(){
+    //     eel.setPosition(name1)
+    // })
 
 }
 

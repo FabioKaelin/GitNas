@@ -8,7 +8,9 @@ eel.getCloneEEL()(function(input){
 
 
 
-
+loader = document.createElement("div")
+loader.setAttribute("class", "loader")
+document.getElementById("explorer").appendChild(loader)
 
 const CodeButton = document.getElementById("ShowCode")
 document.addEventListener("click", function(){

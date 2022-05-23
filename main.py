@@ -34,6 +34,8 @@ def createRepo(name, beschreibung):
     repositories = loadRepositories()
     cloneRepos = Thread(target=updateClone)
     cloneRepos.start()
+    cloneRepos.join()
+    return
 
 
 @eel.expose
@@ -45,7 +47,11 @@ def setPosition(repo, path="", iffolder=True):
         position = [repo, path[1:]]
     else:
         position = [repo, path]
-    if not iffolder:
+    output = execCommandInRepo(repo, "dir /a /B")
+    if len(output.split("\n")[:-1]) == 1:
+
+        eel.setLocation("emptyRepo.html")
+    elif not iffolder:
         eel.setLocation("editor.html")
     else:
         eel.setLocation("explorer.html")

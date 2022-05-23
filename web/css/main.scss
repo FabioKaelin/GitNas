@@ -1,16 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Mochiy+Pop+P+One&display=swap');
 
-:root{
+:root {
     --FontColor: white;
 }
-html{
+
+html {
     height: 100%;
 }
 
-body{
+body {
     height: 100%;
     color: var(--FontColor, white);
 }
+
 hr {
     border: 3px solid rgb(51, 80, 130);
     border-radius: 100px;
@@ -21,7 +23,7 @@ hr {
     border: 5px solid rgb(77, 94, 172);
 }
 
-h1{
+h1 {
     color: white;
     text-decoration: none;
 }
@@ -66,7 +68,7 @@ input {
     height: 30px;
 }
 
-::placeholder{
+::placeholder {
     color: rgb(152, 180, 196);
 }
 
@@ -91,6 +93,7 @@ button {
     display: inline-block;
     height: 30px;
 }
+
 button:hover {
     background-color: rgb(51, 94, 122);
 }
@@ -117,7 +120,7 @@ html {
 }
 
 
-#Fusszeile{
+#Fusszeile {
     display: flex;
     position: relative;
     bottom: 0px;
@@ -125,16 +128,16 @@ html {
     width: 100%;
     height: 100px;
     background-color: rgb(24, 33, 39);
-    font-size:small;
+    font-size: small;
 
 
-    div{
+    div {
         width: 33%;
         padding: 10px;
         background-color: rgba(49, 49, 49, 0.325);
     }
 
-    div:nth-child(2){
+    div:nth-child(2) {
         background-color: rgba(0, 0, 0, 0.497);
     }
 
@@ -142,8 +145,8 @@ html {
 
 
 
-#TitelSeiteObenNavbar{
-    position:fixed;
+#TitelSeiteObenNavbar {
+    position: fixed;
     display: block;
     transition: 39s;
     background-color: rgba(39, 81, 111, 0.685);
@@ -156,23 +159,23 @@ html {
     overflow-y: hidden;
     border-radius: 10px;
 
-    div{
+    div {
         background-color: rgba(39, 81, 111, 0.685);
         right: 0px;
         width: 41px;
-        justify-self:right;
+        justify-self: right;
         position: absolute;
         border-radius: 10px;
-        svg{
+
+        svg {
             display: block;
             right: 0px;
             fill: lightblue
-
         }
     }
 
 
-    hr{
+    hr {
         margin: 0px;
         // display: none;
         visibility: hidden;
@@ -182,7 +185,7 @@ html {
         border-color: rgba(37, 54, 66, 0);
     }
 
-    button{
+    button {
         visibility: hidden;
         opacity: 0;
         transition: visibility 0s, opacity 0.2s linear;
@@ -191,19 +194,22 @@ html {
 
 
 }
-#TitelSeiteObenNavbar:hover{
+
+#TitelSeiteObenNavbar:hover {
 
     display: block !important;
     background-color: rgba(37, 54, 66, 0.637);
     width: max-content;
     height: max-content;
-    button{
+
+    button {
         // display: block;
         visibility: visible;
         opacity: 1;
         position: block;
     }
-    hr{
+
+    hr {
         // display: block;
         visibility: visible;
         opacity: 1;
@@ -213,8 +219,28 @@ html {
 
 #content {
     padding-left: 1%;
-    padding-right:1%;
+    padding-right: 1%;
     width: 100%;
     height: 90%;
 }
 
+
+
+.loader {
+    border: 10px solid rgb(49, 80, 101);
+    border-top: 10px solid rgb(38, 63, 79);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
