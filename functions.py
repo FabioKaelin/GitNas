@@ -10,11 +10,41 @@ load_dotenv()
 icons = {
     "py": "python",
     "gitignore": "git",
-    "pyw": "python"
+    "pyw": "python",
+    "md": "markdown",
+    "svg": "svg",
+    "html": "html",
+    "env": "env",
+    "js": "js",
+    "png": "image",
+    "css": "css",
+    "scss": "scss",
+    "sass": "scss",
+    "pdf": "pdf",
+    "php": "php",
+    "jar": "jar",
+    "java": "java",
+    "go": "go",
+    "json": "json",
+    "csv": "csv",
+    "xlsx": "csv",
+    "database": "database",
+    "docker": "docker",
+    "log": "log",
+    "yml": "yml",
+    "yaml": "yml",
+    "xml": "xml",
+    "zip": "zip",
+    "7z": "zip",
+    "rar": "zip",
+    "doc": "word",
+    "docx": "word",
+    "vue": "vue",
+    "jsx": "react"
 }
 
 imageTypes = ["png", "jpng", "gif"]
-binTypes = ["docs", "xlsx", "ppx"]
+binTypes = ["docx", "xlsx", "ppx"]
 
 outputFile = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\output.txt"
 folder = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\repos"
