@@ -1,11 +1,3 @@
-test.*
-test
-*.lnk
-repos
-output.txt
-.env
-__pycache__
-*.css.map
 __pycache__
 node_modules/*
 .env

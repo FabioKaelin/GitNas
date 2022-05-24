@@ -18,6 +18,9 @@ icons = {
     "env": "env",
     "js": "js",
     "png": "image",
+    "jpeg": "image",
+    "gif": "image",
+    "pdn": "image",
     "css": "css",
     "scss": "scss",
     "sass": "scss",
@@ -206,7 +209,9 @@ def replaceTags(text):
     text = text.replace(">", "&gt;")
     return text
 
-repositories = []
-repositories = loadRepositories()
+
+
 cloneRepos = Thread(target=updateClone)
 cloneRepos.start()
+repositories = []
+repositories = loadRepositories()
