@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitNas - Explorer</title>
+    <title>GitNas - Commits</title>
     <link rel="icon" type="image/x-icon" href="./images/logo/logo.png">
-    <link rel="stylesheet" href="./css/explorer.css">
+    <link rel="stylesheet" href="./css/commits.css">
     <link rel="stylesheet" href="./css/main.css">
 </head>
 
@@ -21,7 +21,7 @@
 
 
     <div id="content">
-        <div id="ExplorerMenue">
+        <div id="CommitsMenue">
             <button id="ShowCode">Code</button>
             <div id="CodeContent" style="display: none;">
                 <div>
@@ -40,15 +40,15 @@
                     Push: <code onclick="CopyToClipboard('CodeContentPush')" id="CodeContentPush">git clone git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
                 </div>
             </div>
-            <button onclick="window.location = 'commits.html'">Commits</button>
+            <button onclick="window.location = 'explorer.html'">Explorer</button>
         </div>
         <!-- <hr class="hearHr" style="margin-left: 5%; width: 89.5%;"> -->
-        <div id="explorer">
+        <div id="commits">
         </div>
     </div>
     <script type="text/javascript" src="/eel.js"></script>
     <script src="./js/main.js"></script>
-    <script src="./js/explorer.js"></script>
+    <script src="./js/commits.js"></script>
 </body>
 
 </html>

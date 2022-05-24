@@ -50,8 +50,12 @@ icons = {
 imageTypes = ["png", "jpng", "gif"]
 binTypes = ["docx", "xlsx", "ppx"]
 
-outputFile = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\output.txt"
-folder = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\repos"
+# outputFile = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\output.txt"
+# folder = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\repos"
+outputFile = os.path.join(__file__, "..", "output.txt")
+folder = os.path.join(__file__, "..", "repos")
+
+
 repositories = []
 
 router_ip = os.getenv('ROUTER_IP')
@@ -76,6 +80,7 @@ class Repository:
 
     def loadCommits(self):
         self.commits=[]
+        # print(execCommandInRepo(self.name, "git log --format=oneline").split("\n"))
         content = execCommandInRepo(self.name, "git log --format=oneline").split("\n")[:-1]
         for commit in content:
             commitList = commit.split(" ", 1)
@@ -152,11 +157,12 @@ def updateClone():
         else:
             execCommandInFolderOhne("git clone " + getClone(repo.replace(".git","")))
 
-        newRepo.loadCommits()
+        # newRepo.loadCommits()
         for index,repo1 in enumerate(repositories):
             if repo1.name == repo.replace(".git", ""):
                 repositories.remove(repo1)
                 repositories.append(newRepo)
+    print("updateClone() finished")
 
 def loadRepositories():
     global repositories

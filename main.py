@@ -10,6 +10,20 @@ position = ["", ""]
 #     return "test"
 
 @eel.expose
+def getCommits():
+    repoName = position[0]
+    for repo in repositories:
+        if repo.name == repoName:
+            repo.loadCommits()
+            commits = repo.commits
+            print(commits)
+            commitsJS = []
+            for commit in commits:
+                commitsJS.append([commit.message, commit.hash])
+            return commitsJS
+
+
+@eel.expose
 def updateDescription(name, description):
     for repo in repositories:
         if repo.name == name:
@@ -37,7 +51,6 @@ def createRepo(name, beschreibung):
     cloneRepos.join()
     return
 
-
 @eel.expose
 def setPosition(repo, path="", iffolder=True):
     global position
@@ -55,7 +68,6 @@ def setPosition(repo, path="", iffolder=True):
         eel.setLocation("editor.html")
     else:
         eel.setLocation("explorer.html")
-
 
 @eel.expose
 def print1(input):
@@ -122,3 +134,4 @@ def loadRepositoriesFunc():
     # return repositoriesJs
 
 eel.start('repos.html', port=9898, size=(800,600))
+

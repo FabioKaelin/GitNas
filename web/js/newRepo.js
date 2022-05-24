@@ -32,9 +32,9 @@ function createNewRepo() {
     loader.setAttribute("class", "loader")
     document.getElementById("NewRepo").appendChild(loader)
 
-    // eel.createRepo(name1, beschreibung1)(function(){
-    //     eel.setPosition(name1)
-    // })
+    eel.createRepo(name1, beschreibung1)(function(){
+        eel.setPosition(name1)
+    })
 
 }
 
