@@ -93,12 +93,24 @@ eel.getCommits()(function(input){
         messageSpan.innerHTML = element[0]
         explorerContent.appendChild(messageSpan)
 
+        dataDiv = document.createElement("div")
+        dataDiv.setAttribute("class", "data")
+
+
+        dateSpan = document.createElement("span")
+        dateSpan.setAttribute("class", "date")
+        dateSpan.innerHTML = element[2]
+
         explorerContent.appendChild(document.createElement("br"))
 
         hashSpan = document.createElement("span")
         hashSpan.setAttribute("class", "hash")
         hashSpan.innerHTML = element[1]
-        explorerContent.appendChild(hashSpan)
+        dataDiv.appendChild(hashSpan)
+        dataDiv.appendChild(dateSpan)
+
+        explorerContent.appendChild(dataDiv)
+
 
         commits.appendChild(explorerContent)
     });

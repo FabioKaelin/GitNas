@@ -82,7 +82,7 @@
         // align-content: flex-start;
         // justify-content: space-between;
         // flex-wrap: nowrap;
-        font-size: xx-large;
+        font-size: large;
         height: fit-content;
         text-align: left;
         margin-bottom: 10px;
@@ -95,8 +95,21 @@
             background-color: rgb(47, 74, 93);
         }
 
+        .data{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .date{
+            color: gray;
+            align-self:flex-end;
+            font-size: small;
+        }
+
         .hash{
-            font-size: medium;
+            color: gray;
+            align-self: flex-start;
+            font-size: small;
         }
     }
 }

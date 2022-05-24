@@ -16,10 +16,9 @@ def getCommits():
         if repo.name == repoName:
             repo.loadCommits()
             commits = repo.commits
-            print(commits)
             commitsJS = []
             for commit in commits:
-                commitsJS.append([commit.message, commit.hash])
+                commitsJS.append([commit.message, commit.hash, commit.date.strftime("%H:%M:%S %d.%m.%Y")])
             return commitsJS
 
 

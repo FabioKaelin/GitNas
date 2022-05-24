@@ -1,9 +1,12 @@
 import codecs
+import datetime
 import os
+import subprocess
 import paramiko
 from dotenv import load_dotenv
 import time
 from threading import Thread
+
 
 load_dotenv()
 
@@ -74,6 +77,7 @@ class Repository:
         localRepos = execCommandInFolder("dir /a /B").split("\n")[:-1]
         self.description = execSSH("cd " + self.name + ".git; cat description")[0]
         if self.name in localRepos:
+            execCommandInRepoOhne(self.name, "git restore .")
             execCommandInRepoOhne(self.name, "git pull")
         else:
             execCommandInFolderOhne("git clone " + getClone(self.name))
@@ -81,12 +85,13 @@ class Repository:
     def loadCommits(self):
         self.commits=[]
         # print(execCommandInRepo(self.name, "git log --format=oneline").split("\n"))
-        content = execCommandInRepo(self.name, "git log --format=oneline").split("\n")[:-1]
+        content = execCommandInRepo(self.name, "git log --decorate=no --date-order --format=oneline -n 1000").split("\n")[:-1]
         for commit in content:
             commitList = commit.split(" ", 1)
             commit = Commit()
             commit.hash = commitList[0]
             commit.message = commitList[1]
+            commit.loadDate()
             self.commits.append(commit)
 
     def getClone(self):
@@ -104,6 +109,14 @@ class Commit:
         self.hash = ""
         self.message = ""
         self.date = ""
+    def loadDate(self):
+        output = subprocess.run(['git', "log", "-n", "1", self.hash], stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")[2].split(" ")[4:-1]
+        self.date=datetime.datetime.strptime(output[1]+" "+output[0]+" "+output[3]+", "+output[2], "%d %b %Y, %H:%M:%S")
+
+
+
+# git log -n 1 2f85e04a999b8c8a60ac9ce6a53b2f61318cc3be --date=short
+
     def __repr__(self):
         return '<Commit message='+ self.message+'>'
 
@@ -153,6 +166,7 @@ def updateClone():
     for repo in RemoteRepos:
         newRepo = Repository(repo.replace(".git", ""))
         if repo.replace(".git", "") in localRepos:
+            execCommandInRepoOhne(repo.replace(".git",""), "git restore .")
             execCommandInRepoOhne(repo.replace(".git",""), "git pull")
         else:
             execCommandInFolderOhne("git clone " + getClone(repo.replace(".git","")))

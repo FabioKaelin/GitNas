@@ -86,7 +86,7 @@
 
 #commits .commitContent {
   background-color: #2e424f;
-  font-size: xx-large;
+  font-size: large;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
@@ -101,7 +101,26 @@
   background-color: #2f4a5d;
 }
 
+#commits .commitContent .data {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#commits .commitContent .date {
+  color: gray;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  font-size: small;
+}
+
 #commits .commitContent .hash {
-  font-size: medium;
+  color: gray;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  font-size: small;
 }
 /*# sourceMappingURL=commits.css.map */
