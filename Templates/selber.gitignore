@@ -16,3 +16,4 @@ ENV/
 !.vscode/launch.json
 !.vscode/extensions.json
 *.css.map
+!README.md
