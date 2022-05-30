@@ -1,5 +1,6 @@
 import eel
 from functions import *
+import zipfile
 import os
 
 eel.init('web')
@@ -174,6 +175,10 @@ def getFileEEL():
     else:
         text = replaceTags(input[0])
         return [text, input[1], input[2], input[3], "text"]
+
+@eel.expose
+def eelDownloadZip():
+    DownloadZIP(position[0])
 
 @eel.expose
 def eelGetPath():

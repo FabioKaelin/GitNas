@@ -1,6 +1,7 @@
 import codecs
 import datetime
 import os
+import zipfile
 import subprocess
 import paramiko
 from dotenv import load_dotenv
@@ -180,12 +181,30 @@ def updateClone():
         for line in execCommandInRepo(repo.replace(".git",""), "git branch -a").split("\n")[:-1]:
             if "remotes/origin/" in line[2:] and not "remotes/origin/HEAD" in line[2:]:
                 execCommandInRepoOhne(repo.replace(".git",""), "git checkout " + line[2:].replace("remotes/origin/", ""))
+        if "main" in execCommandInRepo(repo.replace(".git",""), "git branch -a"):
+            execCommandInRepoOhne(repo.replace(".git",""), "git checkout main")
         # newRepo.loadCommits()
         for index,repo1 in enumerate(repositories):
             if repo1.name == repo.replace(".git", ""):
                 repositories.remove(repo1)
                 repositories.append(newRepo)
     print("updateClone() finished")
+
+def zipdir(path, ziph):
+    # ziph is zipfile handle
+    for root, dirs, files in os.walk(path):
+        if not( "/.git" in root or "\\.git" in root):
+            for file in files:
+                ziph.write(os.path.join(root, file),
+                        os.path.relpath(os.path.join(root, file),
+                                        os.path.join(path, '..')))
+
+def DownloadZIP(repo):
+    # "C:\Users\super\Downloads\PowerToysSetup-0.58.0-x64.exe"
+    from datetime import datetime
+    ts = datetime.timestamp(datetime.now())
+    with zipfile.ZipFile('C:\\Users\\super\\Downloads\\'+repo+ "-"+ str(ts) +".zip", 'w', zipfile.ZIP_DEFLATED) as zipf:
+        zipdir(os.path.join(folder, repo), zipf)
 
 def loadRepositories():
     global repositories
@@ -252,9 +271,16 @@ def getBranches(reponame):
             currentBranch = line[2:]
     return [branches, currentBranch]
 
-
+def makeBackup():
+    execSSH("git add .")
+    execSSH("git commit -m'Modify'")
+    execSSH("git push")
 
 cloneRepos = Thread(target=updateClone)
 cloneRepos.start()
+
+backup1 = Thread(target=makeBackup)
+backup1.start()
+
 repositories = []
 repositories = loadRepositories()

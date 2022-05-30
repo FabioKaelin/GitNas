@@ -118,7 +118,10 @@ setTimeout(() => {
     }
 }, 10);
 
-
+function download(){
+    eel.eelDownloadZip()
+    document.getElementById("downloadButton").innerHTML = "✅Download als ZIP"
+}
 
 eel.eelGetPath()(function(position){
     // console.log(position)
