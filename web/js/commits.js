@@ -83,6 +83,8 @@ commits = document.getElementById("commits")
 
 eel.getCommits()(function(input){
     console.log(input)
+    console.log(input.length)
+    document.getElementById("gesamtCommits").innerHTML = input.length
 
     removeAllChildNodes(commits);
     input.forEach(element => {
