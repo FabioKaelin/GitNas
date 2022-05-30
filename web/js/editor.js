@@ -46,25 +46,34 @@ eel.eelGetPath()(function(position){
 eel.getFileEEL()(function(input){
     removeAllChildNodes(document.getElementById("prePreview"))
     console.log(input)
-    console.log("input")
-    codeDiv = document.createElement("code")
-    codeDiv.setAttribute("id", "codePreview")
-    if (input[1] == "pyw"){
-        input[1] = "py"
+    if (input[4] == "text"){
+        codeDiv = document.createElement("code")
+        codeDiv.setAttribute("id", "codePreview")
+        if (input[1] == "pyw"){
+            input[1] = "py"
+        }
+        codeDiv.setAttribute("class", "line-numbers language-" + input[1])
+        codeDiv.innerHTML = input[0]
+        document.getElementById("prePreview").appendChild(codeDiv)
+
+        script = document.createElement("script")
+        script.setAttribute("src", "./js/syntax/prism.js")
+
+        // <script src="./js/editor.js"></script>
+
+        // content
+        document.getElementById("content").appendChild(script)
+        document.getElementById("lines").innerHTML = input[2]
+        document.getElementById("size").innerHTML = input[3]
     }
-    codeDiv.setAttribute("class", "line-numbers language-" + input[1])
-    codeDiv.innerHTML = input[0]
-    document.getElementById("prePreview").appendChild(codeDiv)
-
-    script = document.createElement("script")
-    script.setAttribute("src", "./js/syntax/prism.js")
-
-    // <script src="./js/editor.js"></script>
-
-    // content
-    document.getElementById("content").appendChild(script)
-    document.getElementById("lines").innerHTML = input[2]
-    document.getElementById("size").innerHTML = input[3]
+    else if (input[4] == "img") {
+        document.getElementById("editor").innerHTML = input[0]
+        document.getElementById("lines").innerHTML = input[2]
+        document.getElementById("size").innerHTML = input[3]
+    }else{
+        document.getElementById("lines").innerHTML = input[2]
+        document.getElementById("size").innerHTML = input[3]
+    }
 
 
 })

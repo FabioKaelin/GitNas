@@ -1,5 +1,5 @@
 eel.getCloneEEL()(function(input){
-    console.log(input)
+    // console.log(input)
     document.getElementById("CodeContentURL").innerHTML = input.Url
     document.getElementById("CodeContentRemote").innerHTML = input.Remote
     document.getElementById("CodeContentClone").innerHTML = input.Clone
@@ -15,13 +15,18 @@ document.getElementById("explorer").appendChild(loader)
 const CodeButton = document.getElementById("ShowCode")
 document.addEventListener("click", function(){
     document.getElementById("CodeContent").style.display = "none"
+    document.getElementById("BranchesContent").style.display = "none"
 })
-console.log(CodeButton)
+// console.log(CodeButton)
 CodeButton.addEventListener("click", function(){
-
     setTimeout(() => {
-
     document.getElementById("CodeContent").style.display = "block"
+    }, 3);
+})
+
+document.getElementById("ShowBranches").addEventListener("click", function(){
+    setTimeout(() => {
+        document.getElementById("BranchesContent").style.display = "block"
     }, 3);
 })
 
@@ -38,6 +43,40 @@ eel.getStructureEEL()
 
 
 setTimeout(() => {
+
+    eel.expose(displaybranches)
+    function displaybranches(input){
+        parentDiv = document.getElementById("BranchesContent")
+        document.getElementById("currentBranch").innerHTML = input[1]
+        removeAllChildNodes(parentDiv);
+
+        input[0].forEach(element => {
+            maxdiv = document.createElement("div")
+            maxdiv.setAttribute("class", element)
+            if (element == input[1]){
+            maxdiv.innerHTML = "* " + element
+            } else{
+                maxdiv.innerHTML = element
+            }
+            maxdiv.addEventListener("click", function(){
+                loader1 = document.createElement("div")
+                loader1.setAttribute("class", "loader")
+                explorer.appendChild(loader1)
+                eel.changeBranch(element)(function(a){
+                    location.reload()
+                })
+            })
+
+
+            parentDiv.appendChild(maxdiv)
+            parentDiv.appendChild(document.createElement("hr"))
+        });
+        parentDiv.removeChild(parentDiv.lastChild)
+    }
+
+
+
+
     eel.expose(displayStructure);
     function displayStructure(input) {
         removeAllChildNodes(explorer);
@@ -100,13 +139,10 @@ eel.eelGetPath()(function(position){
     path1 = position[1] // = "web"
     pathArray = path1.split("/")
 
-    console.log(pathArray)
     pathStr = ""
-    console.log(pathArray == [""])
     if (pathArray != [""]){
 
         pathArray.forEach(element => {
-            console.log(element)
             pathStr = pathStr + "/" + element
             link = document.createElement("a")
             link.setAttribute("href", "#")
@@ -123,3 +159,4 @@ eel.eelGetPath()(function(position){
         });
     }
 })
+window.scrollTo(0, 0);

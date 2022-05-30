@@ -35,7 +35,43 @@
   border-top-right-radius: 10px;
 }
 
+#ExplorerMenue #BranchesContent {
+  margin-left: 11rem;
+  white-space: nowrap;
+  word-break: keep-all;
+  padding: 10px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: fixed;
+  background-color: #102a3b;
+  border-radius: 10px;
+  padding: 5px;
+  -webkit-box-shadow: -4px -2px 10px -1px #000000;
+          box-shadow: -4px -2px 10px -1px #000000;
+}
+
+#ExplorerMenue #BranchesContent div {
+  cursor: pointer;
+  background-color: #14374e;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#ExplorerMenue #BranchesContent div:hover {
+  background-color: #21475f;
+}
+
 #ExplorerMenue #CodeContent {
+  z-index: 10;
   overflow-x: auto;
   white-space: nowrap;
   word-break: keep-all;

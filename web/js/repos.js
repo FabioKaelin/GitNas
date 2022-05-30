@@ -92,7 +92,7 @@ function displayRepositories(repositories) {
         repoDiv.appendChild(imgBearbeiten)
         repoDiv.addEventListener("click", function(){
             if (allowExplorer){
-                window.location = "explorer.html"
+                // window.location = "explorer.html"
                 eel.setPosition(element.name)
             }
         })

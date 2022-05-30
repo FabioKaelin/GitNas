@@ -56,7 +56,7 @@ binTypes = ["docx", "xlsx", "ppx"]
 # outputFile = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\output.txt"
 # folder = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\repos"
 outputFile = os.path.join(__file__, "..", "output.txt")
-folder = os.path.join(__file__, "..", "repos")
+folder = os.path.join(__file__, "..","web", "repos")
 
 
 repositories = []
@@ -73,7 +73,6 @@ class Repository:
         self.description = execSSH("cd " + self.name + ".git; cat description")[0]
 
     def load(self):
-        RemoteRepos = execSSH("ls")
         localRepos = execCommandInFolder("dir /a /B").split("\n")[:-1]
         self.description = execSSH("cd " + self.name + ".git; cat description")[0]
         if self.name in localRepos:
@@ -81,6 +80,10 @@ class Repository:
             execCommandInRepoOhne(self.name, "git pull")
         else:
             execCommandInFolderOhne("git clone " + getClone(self.name))
+
+        output = getBranches(self.name)
+        self.branches = output[0]
+        self.currentBranch = output[1]
 
     def loadCommits(self):
         self.commits=[]
@@ -91,7 +94,7 @@ class Repository:
             commit = Commit()
             commit.hash = commitList[0]
             commit.message = commitList[1]
-            commit.loadDate()
+            commit.loadDate(self.name)
             self.commits.append(commit)
 
     def getClone(self):
@@ -109,13 +112,16 @@ class Commit:
         self.hash = ""
         self.message = ""
         self.date = ""
-    def loadDate(self):
-        output = subprocess.run(['git', "log", "-n", "1", self.hash], stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")[2].split(" ")[4:-1]
+    def loadDate(self, reponame):
+        # f4c13460d15be5f139bd8d0c522aa39a945f7c15
+        # output = subprocess.run(['git', "log", "-n", "1", "--no-decorate", self.hash], shell=True, cwd=folder+"\\"+reponame , stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")[2].split(" ")[4:-1]
+        output = subprocess.run(['git', "log", "-n", "1", "--no-decorate", self.hash], shell=True, cwd=folder+"\\"+reponame , stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")
+        if "Date" in output[2]:
+            output = output[2].split(" ")[4:-1]
+        else:
+            output = output[3].split(" ")[4:-1]
         self.date=datetime.datetime.strptime(output[1]+" "+output[0]+" "+output[3]+", "+output[2], "%d %b %Y, %H:%M:%S")
 
-
-
-# git log -n 1 2f85e04a999b8c8a60ac9ce6a53b2f61318cc3be --date=short
 
     def __repr__(self):
         return '<Commit message='+ self.message+'>'
@@ -171,6 +177,9 @@ def updateClone():
         else:
             execCommandInFolderOhne("git clone " + getClone(repo.replace(".git","")))
 
+        for line in execCommandInRepo(repo.replace(".git",""), "git branch -a").split("\n")[:-1]:
+            if "remotes/origin/" in line[2:] and not "remotes/origin/HEAD" in line[2:]:
+                execCommandInRepoOhne(repo.replace(".git",""), "git checkout " + line[2:].replace("remotes/origin/", ""))
         # newRepo.loadCommits()
         for index,repo1 in enumerate(repositories):
             if repo1.name == repo.replace(".git", ""):
@@ -198,36 +207,50 @@ def getStructure(repo, path=""):
     return structure
 
 def getFile(repo, path=""):
-    position = [repo, path]
-    positionString = os.path.join(folder, position[0], position[1])
+    try:
+        position = [repo, path]
+        positionString = os.path.join(folder, position[0], position[1])
 
-    with open(positionString, 'r', encoding='UTF-8') as file:
-        content = file.read()
-    with open(positionString, 'r', encoding='UTF-8') as file:
-        lines = len(file.readlines())
-    extensionName = path.split(".")[-1:][0]
-    size = os.path.getsize(positionString)
-    sizeString = ""
-    if (size < 1024):
-        sizeString = str(round(size, 2))+" B"
-    else:
-        size = size / 1024
+        with open(positionString, 'r', encoding='UTF-8') as file:
+            content = file.read()
+        with open(positionString, 'r', encoding='UTF-8') as file:
+            lines = len(file.readlines())
+        extensionName = path.split(".")[-1:][0]
+        size = os.path.getsize(positionString)
+        sizeString = ""
         if (size < 1024):
-            sizeString = str(round(size, 2))+" KB"
+            sizeString = str(round(size, 2))+" B"
         else:
             size = size / 1024
             if (size < 1024):
-                sizeString = str(round(size, 2))+" MB"
+                sizeString = str(round(size, 2))+" KB"
             else:
                 size = size / 1024
-                sizeString = str(round(size, 2))+" GB"
-    return [content, extensionName, lines, sizeString]
+                if (size < 1024):
+                    sizeString = str(round(size, 2))+" MB"
+                else:
+                    size = size / 1024
+                    sizeString = str(round(size, 2))+" GB"
+        return [content, extensionName, lines, sizeString]
+    except:
+        return True
 
 def replaceTags(text):
     text = text.replace(";", "&nbsp;")
     text = text.replace("<", "&lt;")
     text = text.replace(">", "&gt;")
     return text
+
+def getBranches(reponame):
+    execCommandInRepo("GitGui", "git branch -a").split("\n")[:-1]
+    output = subprocess.run(["git", "branch"], shell=True, cwd=folder+"\\"+reponame , stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")
+    branches = []
+    currentBranch = ""
+    for line in output:
+        branches.append(line[2:])
+        if line[0:1] == "*":
+            currentBranch = line[2:]
+    return [branches, currentBranch]
 
 
 
