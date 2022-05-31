@@ -9,7 +9,7 @@ import tkinter as tk
 import random
 import os
 
-eel.init('web')
+eel.init(os.path.join(__file__, "..", 'web') )
 position = ["", "", 0]
 location = ""
 # @eel.expose
