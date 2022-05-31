@@ -1,10 +1,17 @@
+import PIL
 import eel
+from pydantic import FilePath
 from functions import *
 import zipfile
+from PIL import Image
+from tkinter import filedialog
+import tkinter as tk
+import random
 import os
 
 eel.init('web')
 position = ["", "", 0]
+location = ""
 # @eel.expose
 # def allBranches():
 #     # eel.allBranches(updateBranch())
@@ -44,8 +51,45 @@ def changeBranch(branch):
     return "a"
 
 @eel.expose
-def createRepo(name, beschreibung):
-    print(name, beschreibung)
+def openSettings(location1, reponame="errk4j2ej2{[)(86*+snh4ek.-823hbndleor12353"):
+    global position
+    print(reponame)
+    global location
+    location = location1
+    if reponame != "errk4j2ej2{[)(86*+snh4ek.-823hbndleor12353":
+        position = [reponame, position[1], position[2]]
+    print(position)
+    eel.setLocation("repoSettings.html")
+
+@eel.expose
+def backofSettings():
+    global location
+    eel.setLocation(location)
+
+@eel.expose
+def getUpdateFill():
+    for repo in repositories:
+        if repo.name == position[0]:
+            print(repo.name)
+            return [position[0], repo.description]
+
+@eel.expose
+def updateRepo(description, icon):
+    reponame = position[0]
+    if icon != "default":
+        setIcon(reponame, icon)
+        loadIconsThread = Thread(target=loadIcons)
+        loadIconsThread.start()
+    for repo in repositories:
+        if repo.name == reponame:
+            repo.setDescription(description)
+    loadRepositories()
+    global location
+    eel.setLocation(location)
+
+@eel.expose
+def createRepo(name, beschreibung, path):
+    print(name, beschreibung, path)
     execSSH("git init --bare "+ name + ".git")
     execSSH("echo '" + beschreibung + "' > " + name + ".git/description")
     global repositories
@@ -53,8 +97,48 @@ def createRepo(name, beschreibung):
     repositories = loadRepositories()
     cloneRepos = Thread(target=updateClone)
     cloneRepos.start()
+    if path == "empty":
+        img = Image.new('RGB', (200, 200), (random.randint(40,200), random.randint(40,200), random.randint(40,200)))
+        img.save(os.path.join(folder, "..", "..", "RepoImg.png"))
+        path = os.path.join(folder, "..", "..", "RepoImg.png")
+    setIconThread = Thread(target=setIcon, args=(name, path,))
+    setIconThread.start()
     cloneRepos.join()
     return
+
+@eel.expose
+def generateImage():
+    img = Image.new('RGB', (200, 200), (random.randint(40,200), random.randint(40,200), random.randint(40,200)))
+    img.save(os.path.join(folder, "..", "RepoImg.png"))
+    path = os.path.join(folder,"..", "RepoImg.png")
+    return "./RepoImg.png"
+
+@eel.expose
+def askImage():
+    filetypes = (
+            ('images', '*.png'),
+            ('images', '*.jpeg')
+        )
+    root = tk.Tk()
+    root.withdraw()
+    file_path = filedialog.askopenfilename(filetypes=filetypes, parent=root)
+    root.destroy()
+    if file_path == "":
+        return "./images/repoIcons/" + position[0] + ".png"
+
+    filename = file_path.split("/")[-1].split("\\")[-1]
+
+    width, height = PIL.Image.open(file_path).size
+    if width > height:
+        im = Image.open(file_path)
+        im_crop = im.crop((0, 0, height, height))
+        im_crop.save(os.path.join(folder, "..", filename), quality=95)
+    else:
+        im = Image.open(file_path)
+        im_crop = im.crop((0, 0, width, width))
+        im_crop.save(os.path.join(folder, "..",filename), quality=95)
+
+    return "./"+filename
 
 @eel.expose
 def setPosition(repo, path="", iffolder=True):
@@ -190,6 +274,8 @@ def loadRepositoriesFunc():
     print(repositories)
     for element in repositories:
         repositoriesJs.append({"name": element.name, "description": element.description})
+    global position
+    position = ["","", 0]
     eel.displayRepositories(repositoriesJs)
     # return repositoriesJs
 

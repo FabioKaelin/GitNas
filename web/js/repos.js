@@ -45,6 +45,13 @@ function displayRepositories(repositories) {
         pDescription.setAttribute("class", "description");
         pDescription.innerHTML = element.description;
 
+
+        repoIcon = document.createElement("img");
+        repoIcon.setAttribute("src", "./images/repoIcons/"+ element.name +".png");
+        repoIcon.setAttribute("alt", "Icon");
+        repoIcon.setAttribute("class", "icon");
+
+
         imgBearbeiten = document.createElement("img");
         imgBearbeiten.setAttribute("src", "./images/icons/stift.svg");
         imgBearbeiten.setAttribute("alt", "bearbeiten");
@@ -52,32 +59,39 @@ function displayRepositories(repositories) {
 
         imgBearbeiten.addEventListener("click", function(){
             allowExplorer = false
-            repos1 = document.getElementById("repos").childNodes
-            repos1.forEach(element1 => {
-                if (element1.childNodes[0].childNodes[0].innerHTML == element.name){
-                    divElement = document.createElement("div")
-                    divElement.addEventListener("click", function(){
-                        allowExplorer = false
-                        setTimeout(() => {
-                            allowExplorer = true
-                        }, 10);
-                    })
-                    divElement.setAttribute("id", "descriptionUpdate")
-                    inputElement = document.createElement("input")
-                    inputElement.setAttribute("type", "text")
-                    inputElement.setAttribute("name", "newDescription")
-                    inputElement.setAttribute("id", "newDescription")
-                    inputElement.setAttribute("currentRepo", element.name)
-                    inputElement.value = element1.childNodes[0].childNodes[1].innerHTML
-                    buttonElement = document.createElement("button")
-                    buttonElement.setAttribute("onclick", "updateDescription()")
-                    buttonElement.innerHTML = "Update"
-                    divElement.appendChild(inputElement)
-                    divElement.appendChild(buttonElement)
-                    console.log(divElement)
-                    element1.childNodes[0].appendChild(divElement)
-                }
-            });
+            // console.log(element.name)
+            // setTimeout(() => {
+                eel.openSettings("repos.html",element.name)
+            // }, 4000);
+
+
+
+            // repos1 = document.getElementById("repos").childNodes
+            // repos1.forEach(element1 => {
+            //     if (element1.childNodes[0].childNodes[0].innerHTML == element.name){
+            //         divElement = document.createElement("div")
+            //         divElement.addEventListener("click", function(){
+            //             allowExplorer = false
+            //             setTimeout(() => {
+            //                 allowExplorer = true
+            //             }, 10);
+            //         })
+            //         divElement.setAttribute("id", "descriptionUpdate")
+            //         inputElement = document.createElement("input")
+            //         inputElement.setAttribute("type", "text")
+            //         inputElement.setAttribute("name", "newDescription")
+            //         inputElement.setAttribute("id", "newDescription")
+            //         inputElement.setAttribute("currentRepo", element.name)
+            //         inputElement.value = element1.childNodes[0].childNodes[1].innerHTML
+            //         buttonElement = document.createElement("button")
+            //         buttonElement.setAttribute("onclick", "updateDescription()")
+            //         buttonElement.innerHTML = "Update"
+            //         divElement.appendChild(inputElement)
+            //         divElement.appendChild(buttonElement)
+            //         console.log(divElement)
+            //         element1.childNodes[0].appendChild(divElement)
+            //     }
+            // });
             setTimeout(() => {
                 allowExplorer = true
             }, 10);
@@ -86,6 +100,7 @@ function displayRepositories(repositories) {
             // eel.updateDescription(element.name, "neue beschreibung")
         })
 
+        repoDiv.appendChild(repoIcon)
         textSpan.appendChild(titleSpan)
         textSpan.appendChild(pDescription)
         repoDiv.appendChild(textSpan)

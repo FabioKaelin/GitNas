@@ -113,6 +113,7 @@ class Commit:
         self.hash = ""
         self.message = ""
         self.date = ""
+
     def loadDate(self, reponame):
         # f4c13460d15be5f139bd8d0c522aa39a945f7c15
         # output = subprocess.run(['git', "log", "-n", "1", "--no-decorate", self.hash], shell=True, cwd=folder+"\\"+reponame , stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")[2].split(" ")[4:-1]
@@ -123,10 +124,8 @@ class Commit:
             output = output[3].split(" ")[4:-1]
         self.date=datetime.datetime.strptime(output[1]+" "+output[0]+" "+output[3]+", "+output[2], "%d %b %Y, %H:%M:%S")
 
-
     def __repr__(self):
         return '<Commit message='+ self.message+'>'
-
 
 def execCommandInFolder(command):
     os.system('cd "' + folder.replace("/", "\\") + '"' + " & "+ command +" > " + outputFile + " 2>nul")
@@ -203,7 +202,7 @@ def DownloadZIP(repo):
     # "C:\Users\super\Downloads\PowerToysSetup-0.58.0-x64.exe"
     from datetime import datetime
     ts = datetime.timestamp(datetime.now())
-    with zipfile.ZipFile('C:\\Users\\super\\Downloads\\'+repo+ "-"+ str(ts) +".zip", 'w', zipfile.ZIP_DEFLATED) as zipf:
+    with zipfile.ZipFile('C:\\Users\\'+str(os.getlogin())+'\\Downloads\\'+repo+ "-"+ str(ts) +".zip", 'w', zipfile.ZIP_DEFLATED) as zipf:
         zipdir(os.path.join(folder, repo), zipf)
 
 def loadRepositories():
@@ -276,8 +275,20 @@ def makeBackup():
     execSSH("git commit -m'Modify'")
     execSSH("git push")
 
+def loadIcons():
+    command = ["pscp","-pw",router_password, "-r", router_username +"@"+router_ip+":/volume1/GitNas/repository/.icons/",os.path.join(folder, "..", "images","repoIcons") ]
+    subprocess.run(command, cwd=folder, shell=True, stdout=subprocess.DEVNULL,  stderr=subprocess.STDOUT)
+
+def setIcon(reponame, path):
+    command = ["pscp","-pw",router_password, path, router_username +"@"+router_ip+":/volume1/GitNas/repository/.icons/"+ reponame+".png"]
+    subprocess.run(command, cwd=os.path.join(folder, ".."), stdout=subprocess.DEVNULL,  stderr=subprocess.STDOUT)
+
+
 cloneRepos = Thread(target=updateClone)
 cloneRepos.start()
+
+loadIconsThread = Thread(target=loadIcons)
+loadIconsThread.start()
 
 backup1 = Thread(target=makeBackup)
 backup1.start()

@@ -66,6 +66,9 @@
 
 #repos .repo span {
   left: 0px;
+  -webkit-box-flex: 5;
+      -ms-flex-positive: 5;
+          flex-grow: 5;
 }
 
 #repos .repo span .title {
@@ -80,13 +83,24 @@
   margin: 0px;
 }
 
+#repos .repo .icon {
+  height: 70px;
+  padding: 4px;
+  margin-right: 10px;
+  width: auto;
+  font-size: x-large;
+  border-radius: 20px;
+  border-width: 0px;
+  border-color: transparent;
+  background-color: black;
+}
+
 #repos .repo img {
   position: relative;
   right: 0px;
   width: 35px;
   height: 35px;
   padding: 5px;
-  margin-left: 10%;
   border-radius: 5px;
 }
 

@@ -55,6 +55,7 @@
 
         span {
             left: 0px;
+            flex-grow: 5;
 
             .title {
                 overflow-x: auto;
@@ -70,6 +71,18 @@
             }
         }
 
+        .icon{
+            height: 70px;
+            padding: 4px;
+            margin-right: 10px;
+            width: auto;
+            font-size: x-large;
+            border-radius: 20px;
+            border-width: 0px;
+            border-color: transparent;
+            background-color: black;
+        }
+
 
 
         img {
@@ -78,7 +91,7 @@
             width: 35px;
             height: 35px;
             padding: 5px;
-            margin-left: 10%;
+            // margin-left: 10%;
             border-radius: 5px;
 
             &:hover {

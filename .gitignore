@@ -24,3 +24,7 @@ ENV/
 !.vscode/launch.json
 !.vscode/extensions.json
 *.css.map
+*/*/repoIcons/*.*
+!repoIcons
+RepoImg.png
+/web/*.png

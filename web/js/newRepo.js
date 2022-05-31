@@ -5,6 +5,16 @@ eel.getRepoNames()(function (input) {
     RepoNames = input
 })
 
+
+function selectIcon(){
+    console.log("seledt icon")
+    eel.askImage()(function(path){
+        document.getElementById("icon").setAttribute("path", path)
+        document.getElementById("icon").value = path.split("/")[path.split("/").length -1]
+
+    })
+}
+
 function createNewRepo() {
     name2 = document.getElementById("name")
     if (RepoNames.includes(name2.value.toLowerCase())){
@@ -31,8 +41,9 @@ function createNewRepo() {
     loader = document.createElement("div")
     loader.setAttribute("class", "loader")
     document.getElementById("NewRepo").appendChild(loader)
+    path = document.getElementById("icon").getAttribute("path")
 
-    eel.createRepo(name1, beschreibung1)(function(){
+    eel.createRepo(name1, beschreibung1, path)(function(){
         eel.setPosition(name1)
     })
 
