@@ -215,6 +215,7 @@ def updateCloneOne(repo, localRepos):
         if "remotes/origin/" in line[2:] and not "remotes/origin/HEAD" in line[2:]:
             execCommandInRepoOhne(repo.replace(".git",""), "git checkout " + line[2:].replace("remotes/origin/", ""))
 
+
     print(repo, "216")
     if "main" in execCommandInRepo(repo.replace(".git",""), "git branch -a"):
         execCommandInRepoOhne(repo.replace(".git",""), "git checkout main")
