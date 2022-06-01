@@ -89,6 +89,7 @@ class Repository:
 
     def loadDescription(self):
         self.description = execSSH("cd " + self.name + ".git; cat description")[0]
+        # print("a")
 
     def load(self):
         localRepos = execCommandInFolder("dir /a /B").split("\n")[:-1]
@@ -199,19 +200,25 @@ def updateCloneOne(repo, localRepos):
     global repositories
     newRepo = Repository(repo.replace(".git", ""))
     if repo.replace(".git", "") in localRepos:
-        print(repo,"start")
+        print(repo,"203")
         execCommandInRepoOhne(repo.replace(".git",""), "git restore .")
-        print(repo, "mitte")
-        execCommandInRepoOhne(repo.replace(".git",""), "git pull")
-        print(repo,"ende")
+        print(repo, "205")
+        if (len(execCommandInRepo("GitGui", "git status").split("\n")) != 4):
+            print(repo, "exec 207")
+            execCommandInRepoOhne(repo.replace(".git",""), "git pull")
+        print(repo,"209")
     else:
         execCommandInFolderOhne("git clone " + getClone(repo.replace(".git","")))
+    print(repo, "212")
 
     for line in execCommandInRepo(repo.replace(".git",""), "git branch -a").split("\n")[:-1]:
         if "remotes/origin/" in line[2:] and not "remotes/origin/HEAD" in line[2:]:
             execCommandInRepoOhne(repo.replace(".git",""), "git checkout " + line[2:].replace("remotes/origin/", ""))
+
+    print(repo, "216")
     if "main" in execCommandInRepo(repo.replace(".git",""), "git branch -a"):
         execCommandInRepoOhne(repo.replace(".git",""), "git checkout main")
+    print(repo, "219")
     for index,repo1 in enumerate(repositories):
         if repo1.name == repo.replace(".git", ""):
             repositories[index] = newRepo
@@ -336,3 +343,6 @@ loadIconsThread.start()
 
 backup1 = Thread(target=makeBackup)
 backup1.start()
+
+
+print(len(execCommandInRepo("GitGui", "git status").split("\n")))
