@@ -236,6 +236,19 @@ html {
     animation: spin 2s linear infinite;
 }
 
+.loaderBig {
+    align-self: center;
+    justify-self: center;
+    margin-top: 60px;
+    margin-left: 230px;
+    border: 40px solid rgb(49, 80, 101);
+    border-top: 40px solid rgb(38, 63, 79);
+    border-radius: 50%;
+    width: 400px;
+    height: 400px;
+    animation: spin 2s linear infinite;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

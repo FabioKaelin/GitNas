@@ -8,6 +8,7 @@ import tkinter as tk
 import random
 import os
 
+
 eel.init(os.path.join(__file__, "..", 'web') )
 position = ["", "", 0]
 location = ""
@@ -148,7 +149,8 @@ def setPosition(repo, path="", iffolder=True):
 
 
     output = execCommandInRepo(repo, "dir /a /B")
-    if len(output.split("\n")[:-1]) == 1:
+    # print(output, repo)
+    if len(output.split("\n")) == 1:
 
         eel.setLocation("emptyRepo.html")
     elif not iffolder:
@@ -160,8 +162,7 @@ def setPosition(repo, path="", iffolder=True):
         for index, repo1 in enumerate(repositories):
             if repo1.name == position[0]:
                 position[2] = index
-        repo1 = repositories[position[2]]
-        loadRepo = Thread(target=repo1.load())
+        loadRepo = Thread(target=repositories[position[2]].load())
         loadRepo.start()
 
 @eel.expose
@@ -241,7 +242,7 @@ def getStructureEEL():
 def getFileEEL():
     global position
     input = getFile(position[0], position[1])
-    if input:
+    if input == True:
         positionString = os.path.join(folder, position[0], position[1])
         extensionName = position[1].split(".")[-1:][0]
         size = os.path.getsize(positionString)
@@ -279,6 +280,7 @@ def eelGetPath():
 @eel.expose
 def loadRepositoriesFunc():
     repositoriesJs = []
+    repositories = loadRepositoriesThread.join()
     print(repositories)
     for element in repositories:
         repositoriesJs.append({"name": element.name, "description": element.description})
@@ -286,5 +288,12 @@ def loadRepositoriesFunc():
     position = ["","", 0]
     eel.displayRepositories(repositoriesJs)
 
-eel.start('repos.html', port=8085, size=(1000,800))
+@eel.expose
+def startLoading():
+    global repositories
+    repositories = loadRepositoriesThread.join()
+    eel.setLocation("repos.html")
 
+
+eel.start('load.html', port=8085, size=(1000,800))
+print("afd")
