@@ -1,4 +1,4 @@
-eel.getCloneEEL()(function(input){
+eel.getCloneEEL()(function (input) {
     // console.log(input)
     document.getElementById("CodeContentURL").innerHTML = input.Url
     document.getElementById("CodeContentRemote").innerHTML = input.Remote
@@ -6,183 +6,183 @@ eel.getCloneEEL()(function(input){
     document.getElementById("CodeContentPush").innerHTML = input.Push
 })
 
-eel.getReadme()(function(content){
+eel.getReadme()(function (content) {
     var mainDiv = document.getElementById("markdown")
-    if (content == "false"){
+    if (content == "false") {
         mainDiv.parentNode.removeChild(mainDiv);
         return
     }
+
     var updateContent = ""
 
-    imageRegex = /\!\[.*\]\(.*\)/gi
-    linkRegex = /\[.*\]\(.*\)/gi
-    importantRegex = /\*\*\*.*\*\*\*/gi
-    blodRegex = /\*\*.*\*\*/gi
-    italicRegex = /\*.*\*/gi
-    codeRegex = /\`.*\`/gi
-    strikeRegex = /\~\~.*\~\~/gi
-    highlightRegex = /\=\=.*\=\=/gi
+    imageRegex = /\!\[.*?\]\(.*?\)/gi
+    linkRegex = /\[.*?\]\(.*?\)/gi
+    importantRegex = /\*\*\*.*?\*\*\*/gi
+    blodRegex = /\*\*.*?\*\*/gi
+    italicRegex = /\*.*?\*/gi
+    codeRegex = /\`.*?\`/gi
+    strikeRegex = /\~\~.*?\~\~/gi
+    highlightRegex = /\=\=.*?\=\=/gi
 
     ullist = false
     ollist = false
 
     content.split("\n").forEach(element => {
         makeBr = true
-        if (element.substring(0,4) == "####"){
+        if (element.substring(0, 4) == "####") {
             makeBr = false
             updateContent += "<h4>" + element.substring(5) + "</h4>"
-        } else if (element.substring(0,3) == "###"){
+        } else if (element.substring(0, 3) == "###") {
             makeBr = false
             updateContent += "<h3>" + element.substring(4) + "</h3>"
-        } else if (element.substring(0,2) == "##"){
+        } else if (element.substring(0, 2) == "##") {
             makeBr = false
             updateContent += "<h2>" + element.substring(3) + "</h2>"
-        } else if (element.substring(0,1) == "#"){
+        } else if (element.substring(0, 1) == "#") {
             makeBr = false
             updateContent += "<h1>" + element.substring(2) + "</h1>"
-        } else{
+        } else {
             newContent = element
 
 
             regexCheck = imageRegex.test(element)
-            if (regexCheck){
+            if (regexCheck) {
                 matchList = element.match(imageRegex)
                 // console.log(matchList)
                 matchList.forEach(element => {
-                    alttext = element.replace("![", "").replace(/\]\(.*\)/, "")
-                    urltext = element.replace(")", "").replace(/\!\[.*\]\(/, "")
+                    alttext = element.replace("![", "").replace(/\]\(.*?\)/, "")
+                    urltext = element.replace(")", "").replace(/\!\[.*?\]\(/, "")
                     imgTag = '<img src="' + urltext + '" alt="' + alttext + '"></img>'
-                    newContent = newContent.replace(/\!\[.*\]\(.*\)/, imgTag)
+                    newContent = newContent.replace(/\!\[.*?\]\(.*?\)/, imgTag)
                 });
             }
 
             regexCheck = linkRegex.test(element)
-            if (regexCheck){
+            if (regexCheck) {
                 matchList = element.match(linkRegex)
                 // console.log(matchList)
                 matchList.forEach(element => {
-                    alttext = element.replace("[", "").replace(/\]\(.*\)/, "")
-                    urltext = element.replace(")", "").replace(/\[.*\]\(/, "")
-                    imgTag = '<a href="' + urltext + '">'+alttext+'</a>'
-                    newContent = newContent.replace(/\[.*\]\(.*\)/, imgTag)
+                    alttext = element.replace("[", "").replace(/\]\(.*?\)/, "")
+                    urltext = element.replace(")", "").replace(/\[.*?\]\(/, "")
+                    imgTag = '<a href="' + urltext + '">' + alttext + '</a>'
+                    newContent = newContent.replace(/\[.*?\]\(.*?\)/, imgTag)
                 });
             }
 
             regexCheck = importantRegex.test(element)
-            if (regexCheck){
+            if (regexCheck) {
                 matchList = element.match(importantRegex)
                 // console.log(matchList)
                 matchList.forEach(element => {
                     content = element.replace(/\*\*\*/g, "")
-                    bTag = '<i><b>'+ content +'</b></i>'
-                    newContent = newContent.replace(/\*\*\*.*\*\*\*/, bTag)
+                    bTag = '<i><b>' + content + '</b></i>'
+                    newContent = newContent.replace(/\*\*\*.*?\*\*\*/, bTag)
                 });
             }
 
             regexCheck = blodRegex.test(element)
-            if (regexCheck){
+            if (regexCheck) {
                 matchList = element.match(blodRegex)
                 // console.log(matchList)
                 matchList.forEach(element => {
                     content = element.replace(/\*\*/g, "")
-                    bTag = '<b>'+ content +'</b>'
-                    newContent = newContent.replace(/\*\*.*\*\*/, bTag)
+                    bTag = '<b>' + content + '</b>'
+                    newContent = newContent.replace(/\*\*.*?\*\*/, bTag)
                 });
             }
 
             regexCheck = italicRegex.test(element)
-            if (regexCheck){
+            if (regexCheck) {
                 matchList = element.match(italicRegex)
                 // console.log(matchList)
                 matchList.forEach(element => {
                     content = element.replace(/\*/g, "")
-                    bTag = '<i>'+ content +'</i>'
-                    newContent = newContent.replace(/\*.*\*/, bTag)
+                    bTag = '<i>' + content + '</i>'
+                    newContent = newContent.replace(/\*.*?\*/, bTag)
                 });
             }
 
             regexCheck = codeRegex.test(element)
-            if (regexCheck){
+            if (regexCheck) {
                 matchList = element.match(codeRegex)
                 // console.log(matchList)
                 matchList.forEach(element => {
                     content = element.replace(/\`/g, "")
-                    bTag = '<code>'+ content +'</code>'
-                    newContent = newContent.replace(/\`.*\`/, bTag)
+                    bTag = '<code>' + content + '</code>'
+                    newContent = newContent.replace(/\`.*?\`/, bTag)
                 });
             }
             regexCheck = strikeRegex.test(element)
-            if (regexCheck){
+            if (regexCheck) {
                 matchList = element.match(strikeRegex)
                 // console.log(matchList)
                 matchList.forEach(element => {
                     content = element.replace(/\~\~/g, "")
-                    bTag = '<s>'+ content +'</s>'
-                    newContent = newContent.replace(/\~\~.*\~\~/, bTag)
+                    bTag = '<s>' + content + '</s>'
+                    newContent = newContent.replace(/\~\~.*?\~\~/, bTag)
                 });
             }
 
             regexCheck = highlightRegex.test(element)
-            if (regexCheck){
+            if (regexCheck) {
                 matchList = element.match(highlightRegex)
                 // console.log(matchList)
                 matchList.forEach(element => {
                     content = element.replace(/\=\=/g, "")
-                    bTag = '<mark>'+ content +'</mark>'
-                    newContent = newContent.replace(/\=\=.*\=\=/, bTag)
+                    bTag = '<mark>' + content + '</mark>'
+                    newContent = newContent.replace(/\=\=.*?\=\=/, bTag)
                 });
             }
 
-            if (newContent.substring(0,1) == "-"){
+            if (newContent.substring(0, 1) == "-") {
                 makeBr = false
-                if (!ullist){
+                if (!ullist) {
                     newContent = "<ul>" + newContent
                 }
                 newContent = newContent.replace("-", "<li>") + "</li>"
                 ullist = true
 
-            }else if (newContent.substring(0,1) == "*"){
+            } else if (newContent.substring(0, 1) == "*") {
                 makeBr = false
-                if (!ullist){
+                if (!ullist) {
                     newContent = "<ul>" + newContent
                 }
                 newContent = newContent.replace("*", "<li>") + "</li>"
                 ullist = true
-            }else{
-                if (ullist){
-                    newContent = "</ul>"+ newContent
+            } else {
+                if (ullist) {
+                    newContent = "</ul>" + newContent
 
                 }
                 ullist = false
             }
 
 
-            if (/\d\. /.test(newContent.substring(0,3))){
+            if (/\d\. /.test(newContent.substring(0, 3))) {
                 makeBr = false
-                if (!ollist){
+                if (!ollist) {
                     newContent = "<ol>" + newContent
                 }
                 newContent = newContent.replace(/\d\. /, "<li>") + "</li>"
                 ollist = true
 
-            }else{
-                if (ollist){
-                    newContent = "</ol>"+ newContent
+            } else {
+                if (ollist) {
+                    newContent = "</ol>" + newContent
 
                 }
                 ollist = false
             }
 
+
             updateContent += newContent
-            if (makeBr){
-                if (newContent != ""){
-                    updateContent    += "<br>"
-                }
-            }
         }
 
 
 
+        if (makeBr) {
+            updateContent += "<br>"
+        }
     });
 
     mainDiv.innerHTML = updateContent
@@ -193,24 +193,24 @@ loader.setAttribute("class", "loader")
 document.getElementById("explorer").appendChild(loader)
 
 const CodeButton = document.getElementById("ShowCode")
-document.addEventListener("click", function(){
+document.addEventListener("click", function () {
     document.getElementById("CodeContent").style.display = "none"
     document.getElementById("BranchesContent").style.display = "none"
 })
 // console.log(CodeButton)
-CodeButton.addEventListener("click", function(){
+CodeButton.addEventListener("click", function () {
     setTimeout(() => {
-    document.getElementById("CodeContent").style.display = "block"
+        document.getElementById("CodeContent").style.display = "block"
     }, 3);
 })
 
-document.getElementById("ShowBranches").addEventListener("click", function(){
+document.getElementById("ShowBranches").addEventListener("click", function () {
     setTimeout(() => {
         document.getElementById("BranchesContent").style.display = "block"
     }, 3);
 })
 
-const CopyToClipboard = function(id){
+const CopyToClipboard = function (id) {
     var copyText = document.getElementById(id);
     navigator.clipboard.writeText(copyText.innerHTML);
 }
@@ -225,7 +225,7 @@ eel.getStructureEEL()
 setTimeout(() => {
 
     eel.expose(displaybranches)
-    function displaybranches(input){
+    function displaybranches(input) {
         parentDiv = document.getElementById("BranchesContent")
         document.getElementById("currentBranch").innerHTML = input[1]
         removeAllChildNodes(parentDiv);
@@ -233,16 +233,16 @@ setTimeout(() => {
         input[0].forEach(element => {
             maxdiv = document.createElement("div")
             maxdiv.setAttribute("class", element)
-            if (element == input[1]){
-            maxdiv.innerHTML = "* " + element
-            } else{
+            if (element == input[1]) {
+                maxdiv.innerHTML = "* " + element
+            } else {
                 maxdiv.innerHTML = element
             }
-            maxdiv.addEventListener("click", function(){
+            maxdiv.addEventListener("click", function () {
                 loader1 = document.createElement("div")
                 loader1.setAttribute("class", "loader")
                 explorer.appendChild(loader1)
-                eel.changeBranch(element)(function(a){
+                eel.changeBranch(element)(function (a) {
                     location.reload()
                 })
             })
@@ -267,7 +267,7 @@ setTimeout(() => {
             // console.log(element)
             explorerContent = document.createElement("div")
             explorerContent.setAttribute("class", "explorerContent")
-            explorerContent.addEventListener("click", function(){
+            explorerContent.addEventListener("click", function () {
                 eel.setPosition(input[0][0], input[0][1] + "/" + element[0], element[2])
             })
 
@@ -275,7 +275,7 @@ setTimeout(() => {
             explorerContentHead.setAttribute("class", "explorerContentHead")
 
             img = document.createElement("img")
-            img.setAttribute("src", "./images/icons/"+element[1])
+            img.setAttribute("src", "./images/icons/" + element[1])
             img.setAttribute("alt", "")
             explorerContentHead.appendChild(img)
 
@@ -298,12 +298,12 @@ setTimeout(() => {
     }
 }, 10);
 
-function download(){
+function download() {
     eel.eelDownloadZip()
     document.getElementById("downloadButton").innerHTML = "✅Download als ZIP"
 }
 
-eel.eelGetPath()(function(position){
+eel.eelGetPath()(function (position) {
     // console.log(position)
     // document.getElementById("repoPath").innerHTML = position[0]
 
@@ -313,7 +313,7 @@ eel.eelGetPath()(function(position){
     repoPath = document.createElement("a")
     repoPath.setAttribute("href", "#")
     repoPath.innerHTML = position[0]
-    repoPath.addEventListener("click",function(){
+    repoPath.addEventListener("click", function () {
         eel.setPosition(position[0])
         location.reload()
     })
@@ -323,7 +323,7 @@ eel.eelGetPath()(function(position){
     pathArray = path1.split("/")
 
     pathStr = ""
-    if (pathArray != [""]){
+    if (pathArray != [""]) {
 
         pathArray.forEach(element => {
             pathStr = pathStr + "/" + element
@@ -331,7 +331,7 @@ eel.eelGetPath()(function(position){
             link.setAttribute("href", "#")
             link.setAttribute("pfad", pathStr)
             link.innerHTML = element
-            link.addEventListener("click", function(){
+            link.addEventListener("click", function () {
                 eel.setPosition(position[0], this.getAttribute("pfad"))
                 location.reload()
             })

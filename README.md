@@ -16,7 +16,5 @@ Ich habe im April 2022 auf meinem Nas ein Git-Server eigerichtet und möchte nun
 
 ## Starten
 
-Wenn eine Konsole nicht stört kann man `python main.py` in der Konsole eingeben oder
-`main.py` ausführen.
-
+Wenn eine Konsole nicht stört kann man `python main.py` in der Konsole eingeben oder `main.py` ausführen.
 Jedoch wenn man keine Konsole möchte muss man `main.py` zu `main.pyw` umbenennen und dann `start.pyw` ausführen.
