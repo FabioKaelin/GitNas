@@ -1,6 +1,5 @@
 import PIL
 import eel
-from pydantic import FilePath
 from functions import *
 import zipfile
 from PIL import Image
@@ -170,6 +169,19 @@ def setPosition(repo, path="", iffolder=True):
         loadRepo.start()
 
 @eel.expose
+def getReadme():
+    global position
+    positionString = os.path.join(folder, position[0])
+    content = os.listdir(positionString)
+    if "README.md" not in content:
+        return "false"
+    positionString = os.path.join(folder, position[0], "README.md")
+
+    with open(positionString, 'r', encoding='UTF-8') as file:
+        content = file.read()
+    return content
+
+@eel.expose
 def print1(input):
     print(input)
 
@@ -279,5 +291,5 @@ def loadRepositoriesFunc():
     eel.displayRepositories(repositoriesJs)
     # return repositoriesJs
 
-eel.start('repos.html', port=9898, size=(1000,800))
+eel.start('repos.html', port=8085, size=(1000,800))
 

@@ -6,7 +6,187 @@ eel.getCloneEEL()(function(input){
     document.getElementById("CodeContentPush").innerHTML = input.Push
 })
 
+eel.getReadme()(function(content){
+    var mainDiv = document.getElementById("markdown")
+    if (content == "false"){
+        mainDiv.parentNode.removeChild(mainDiv);
+        return
+    }
+    var updateContent = ""
 
+    imageRegex = /\!\[.*\]\(.*\)/gi
+    linkRegex = /\[.*\]\(.*\)/gi
+    importantRegex = /\*\*\*.*\*\*\*/gi
+    blodRegex = /\*\*.*\*\*/gi
+    italicRegex = /\*.*\*/gi
+    codeRegex = /\`.*\`/gi
+    strikeRegex = /\~\~.*\~\~/gi
+    highlightRegex = /\=\=.*\=\=/gi
+
+    ullist = false
+    ollist = false
+
+    content.split("\n").forEach(element => {
+        makeBr = true
+        if (element.substring(0,4) == "####"){
+            makeBr = false
+            updateContent += "<h4>" + element.substring(5) + "</h4>"
+        } else if (element.substring(0,3) == "###"){
+            makeBr = false
+            updateContent += "<h3>" + element.substring(4) + "</h3>"
+        } else if (element.substring(0,2) == "##"){
+            makeBr = false
+            updateContent += "<h2>" + element.substring(3) + "</h2>"
+        } else if (element.substring(0,1) == "#"){
+            makeBr = false
+            updateContent += "<h1>" + element.substring(2) + "</h1>"
+        } else{
+            newContent = element
+
+
+            regexCheck = imageRegex.test(element)
+            if (regexCheck){
+                matchList = element.match(imageRegex)
+                // console.log(matchList)
+                matchList.forEach(element => {
+                    alttext = element.replace("![", "").replace(/\]\(.*\)/, "")
+                    urltext = element.replace(")", "").replace(/\!\[.*\]\(/, "")
+                    imgTag = '<img src="' + urltext + '" alt="' + alttext + '"></img>'
+                    newContent = newContent.replace(/\!\[.*\]\(.*\)/, imgTag)
+                });
+            }
+
+            regexCheck = linkRegex.test(element)
+            if (regexCheck){
+                matchList = element.match(linkRegex)
+                // console.log(matchList)
+                matchList.forEach(element => {
+                    alttext = element.replace("[", "").replace(/\]\(.*\)/, "")
+                    urltext = element.replace(")", "").replace(/\[.*\]\(/, "")
+                    imgTag = '<a href="' + urltext + '">'+alttext+'</a>'
+                    newContent = newContent.replace(/\[.*\]\(.*\)/, imgTag)
+                });
+            }
+
+            regexCheck = importantRegex.test(element)
+            if (regexCheck){
+                matchList = element.match(importantRegex)
+                // console.log(matchList)
+                matchList.forEach(element => {
+                    content = element.replace(/\*\*\*/g, "")
+                    bTag = '<i><b>'+ content +'</b></i>'
+                    newContent = newContent.replace(/\*\*\*.*\*\*\*/, bTag)
+                });
+            }
+
+            regexCheck = blodRegex.test(element)
+            if (regexCheck){
+                matchList = element.match(blodRegex)
+                // console.log(matchList)
+                matchList.forEach(element => {
+                    content = element.replace(/\*\*/g, "")
+                    bTag = '<b>'+ content +'</b>'
+                    newContent = newContent.replace(/\*\*.*\*\*/, bTag)
+                });
+            }
+
+            regexCheck = italicRegex.test(element)
+            if (regexCheck){
+                matchList = element.match(italicRegex)
+                // console.log(matchList)
+                matchList.forEach(element => {
+                    content = element.replace(/\*/g, "")
+                    bTag = '<i>'+ content +'</i>'
+                    newContent = newContent.replace(/\*.*\*/, bTag)
+                });
+            }
+
+            regexCheck = codeRegex.test(element)
+            if (regexCheck){
+                matchList = element.match(codeRegex)
+                // console.log(matchList)
+                matchList.forEach(element => {
+                    content = element.replace(/\`/g, "")
+                    bTag = '<code>'+ content +'</code>'
+                    newContent = newContent.replace(/\`.*\`/, bTag)
+                });
+            }
+            regexCheck = strikeRegex.test(element)
+            if (regexCheck){
+                matchList = element.match(strikeRegex)
+                // console.log(matchList)
+                matchList.forEach(element => {
+                    content = element.replace(/\~\~/g, "")
+                    bTag = '<s>'+ content +'</s>'
+                    newContent = newContent.replace(/\~\~.*\~\~/, bTag)
+                });
+            }
+
+            regexCheck = highlightRegex.test(element)
+            if (regexCheck){
+                matchList = element.match(highlightRegex)
+                // console.log(matchList)
+                matchList.forEach(element => {
+                    content = element.replace(/\=\=/g, "")
+                    bTag = '<mark>'+ content +'</mark>'
+                    newContent = newContent.replace(/\=\=.*\=\=/, bTag)
+                });
+            }
+
+            if (newContent.substring(0,1) == "-"){
+                makeBr = false
+                if (!ullist){
+                    newContent = "<ul>" + newContent
+                }
+                newContent = newContent.replace("-", "<li>") + "</li>"
+                ullist = true
+
+            }else if (newContent.substring(0,1) == "*"){
+                makeBr = false
+                if (!ullist){
+                    newContent = "<ul>" + newContent
+                }
+                newContent = newContent.replace("*", "<li>") + "</li>"
+                ullist = true
+            }else{
+                if (ullist){
+                    newContent = "</ul>"+ newContent
+
+                }
+                ullist = false
+            }
+
+
+            if (/\d\. /.test(newContent.substring(0,3))){
+                makeBr = false
+                if (!ollist){
+                    newContent = "<ol>" + newContent
+                }
+                newContent = newContent.replace(/\d\. /, "<li>") + "</li>"
+                ollist = true
+
+            }else{
+                if (ollist){
+                    newContent = "</ol>"+ newContent
+
+                }
+                ollist = false
+            }
+
+            updateContent += newContent
+            if (makeBr){
+                if (newContent != ""){
+                    updateContent    += "<br>"
+                }
+            }
+        }
+
+
+
+    });
+
+    mainDiv.innerHTML = updateContent
+})
 
 loader = document.createElement("div")
 loader.setAttribute("class", "loader")

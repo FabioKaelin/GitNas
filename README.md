@@ -13,3 +13,10 @@ Ich habe im April 2022 auf meinem Nas ein Git-Server eigerichtet und möchte nun
 * Im Fileexplorer möchte ich ein Icon haben, welches mir sagt, was es für ein File Type ist, um eine bessere Übersicht zu haben.
 * Ich möchte neue Repositories erstellen können und auch wieder löschen können damit ich dies nicht in der Kommando-Zeile machen muss.
 * Ich möchte mit einem Knopf zwischen den Branches wechseln könne damit ich auch andere Branches ansehen kann und zu überprüfen, ob alles richtig ist.
+
+## Starten
+
+Wenn eine Konsole nicht stört kann man `python main.py` in der Konsole eingeben oder
+`main.py` ausführen.
+
+Jedoch wenn man keine Konsole möchte muss man `main.py` zu `main.pyw` umbenennen und dann `start.pyw` ausführen.

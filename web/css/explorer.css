@@ -197,4 +197,27 @@
   height: -moz-min-content;
   height: min-content;
 }
+
+#markdown {
+  margin-left: 5%;
+  margin-bottom: 20px;
+  padding: 1%;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  width: 88%;
+  background-color: #171f25;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+#markdown code {
+  background-color: #474747;
+  padding: 2px;
+  border-radius: 5px;
+  color: white;
+  font-family: Consolas,monaco,monospace;
+}
 /*# sourceMappingURL=explorer.css.map */
