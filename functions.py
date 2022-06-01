@@ -58,19 +58,36 @@ binTypes = ["docx", "xlsx", "ppx"]
 # folder = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\repos"
 outputFile = os.path.join(__file__, "..", "output.txt")
 folder = os.path.join(__file__, "..","web", "repos")
-
-
 repositories = []
+
 
 router_ip = os.getenv('ROUTER_IP')
 router_username = os.getenv('ROUTER_USERNAME')
 router_password = os.getenv('ROUTER_PASSWORD')
 
+
+class ThreadWithReturnValue(Thread):
+    def __init__(self, group=None, target=None, name=None,
+                 args=(), kwargs={}, Verbose=None):
+        Thread.__init__(self, group, target, name, args, kwargs)
+        self._return = None
+    def run(self):
+        if self._target is not None:
+            self._return = self._target(*self._args,
+                                                **self._kwargs)
+    def join(self, *args):
+        Thread.join(self, *args)
+        return self._return
+
 class Repository:
     def __init__(self, name):
         self.name = name
+        loadDescriptionThread = Thread(target=self.loadDescription)
+        loadDescriptionThread.start()
         self.path = os.path.join(folder, name+".git")
         self.commits = []
+
+    def loadDescription(self):
         self.description = execSSH("cd " + self.name + ".git; cat description")[0]
 
     def load(self):
@@ -88,7 +105,6 @@ class Repository:
 
     def loadCommits(self):
         self.commits=[]
-        # print(execCommandInRepo(self.name, "git log --format=oneline").split("\n"))
         content = execCommandInRepo(self.name, "git log --decorate=no --date-order --format=oneline -n 1000").split("\n")[:-1]
         for commit in content:
             commitList = commit.split(" ", 1)
@@ -134,12 +150,13 @@ def execCommandInFolder(command):
     return content
 
 def execCommandInRepo(repo, command):
-    os.system('cd "' + folder.replace("/", "\\") + '\\' + repo + '"' + " & "+ command + "> " + outputFile + " 2>nul")
+    output = subprocess.run(command, shell=True, cwd=os.path.join(folder, repo) , stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1]
+
     # os.system('cd "' + folder.replace("/", "\\") + '\\' + repo + '"' + " & "+ command + "> " + outputFile + " 2>nul")
-    # execCommandInFolder(command+" > " + outputFile)
-    with open(outputFile, 'r', encoding='UTF-8') as file:
-        content = file.read()
-    return content
+    # with open(outputFile, 'r', encoding='UTF-8') as file:
+        # content = file.read()
+    # return content
+    return output
 
 def execCommandInFolderOhne(command):
     os.system('cd "' + folder.replace("/", "\\") + '"' + " & "+ command + " >nul 2>nul")
@@ -148,45 +165,68 @@ def execCommandInRepoOhne(repo, command):
     os.system('cd "' + folder.replace("/", "\\") + '\\' + repo + '"' + " & "+ command + " >nul 2>nul")
 
 def execSSH(command):
-    ssh = paramiko.SSHClient()
+    try:
+        ssh = paramiko.SSHClient()
 
-    ssh.load_system_host_keys()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(router_ip,
-                username=router_username,
-                password=router_password,
-                look_for_keys=False)
+        ssh.load_system_host_keys()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(router_ip,
+                    username=router_username,
+                    password=router_password,
+                    look_for_keys=False)
 
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd /;cd volume1/GitNas/repository; " + command)
-    output = []
-    for line in ssh_stdout.readlines():
-        output.append(line.replace("\n", ""))
-    return output
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd /;cd volume1/GitNas/repository; " + command)
+        output = [line.replace('\n', '') for line in ssh_stdout.readlines()]
+        return output
+    except:
+        ssh = paramiko.SSHClient()
+
+        ssh.load_system_host_keys()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(router_ip,
+                    username=router_username,
+                    password=router_password,
+                    look_for_keys=False)
+
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd /;cd volume1/GitNas/repository; " + command)
+        output = [line.replace('\n', '') for line in ssh_stdout.readlines()]
+        return output
 
 def getClone(name):
     return "ssh://"+router_username+"@"+router_ip+":/volume1/GitNas/repository/" + name + ".git"
 
+def updateCloneOne(repo, localRepos):
+    global repositories
+    newRepo = Repository(repo.replace(".git", ""))
+    if repo.replace(".git", "") in localRepos:
+        print(repo,"start")
+        execCommandInRepoOhne(repo.replace(".git",""), "git restore .")
+        print(repo, "mitte")
+        execCommandInRepoOhne(repo.replace(".git",""), "git pull")
+        print(repo,"ende")
+    else:
+        execCommandInFolderOhne("git clone " + getClone(repo.replace(".git","")))
+
+    for line in execCommandInRepo(repo.replace(".git",""), "git branch -a").split("\n")[:-1]:
+        if "remotes/origin/" in line[2:] and not "remotes/origin/HEAD" in line[2:]:
+            execCommandInRepoOhne(repo.replace(".git",""), "git checkout " + line[2:].replace("remotes/origin/", ""))
+    if "main" in execCommandInRepo(repo.replace(".git",""), "git branch -a"):
+        execCommandInRepoOhne(repo.replace(".git",""), "git checkout main")
+    for index,repo1 in enumerate(repositories):
+        if repo1.name == repo.replace(".git", ""):
+            repositories[index] = newRepo
+
 def updateClone():
     RemoteRepos = execSSH("ls")
     localRepos = execCommandInFolder("dir /a /B").split("\n")[:-1]
+    updateRepoArray = []
     for repo in RemoteRepos:
-        newRepo = Repository(repo.replace(".git", ""))
-        if repo.replace(".git", "") in localRepos:
-            execCommandInRepoOhne(repo.replace(".git",""), "git restore .")
-            execCommandInRepoOhne(repo.replace(".git",""), "git pull")
-        else:
-            execCommandInFolderOhne("git clone " + getClone(repo.replace(".git","")))
-
-        for line in execCommandInRepo(repo.replace(".git",""), "git branch -a").split("\n")[:-1]:
-            if "remotes/origin/" in line[2:] and not "remotes/origin/HEAD" in line[2:]:
-                execCommandInRepoOhne(repo.replace(".git",""), "git checkout " + line[2:].replace("remotes/origin/", ""))
-        if "main" in execCommandInRepo(repo.replace(".git",""), "git branch -a"):
-            execCommandInRepoOhne(repo.replace(".git",""), "git checkout main")
-        # newRepo.loadCommits()
-        for index,repo1 in enumerate(repositories):
-            if repo1.name == repo.replace(".git", ""):
-                repositories.remove(repo1)
-                repositories.append(newRepo)
+        updateCloneOne(repo,localRepos)
+        # updateCloneOneThread = Thread(target=updateCloneOne, args=(repo,localRepos,))
+        # updateCloneOneThread.start()
+        # updateRepoArray.append(updateCloneOneThread)
+    # for thread in updateRepoArray:
+    #     thread.join()
     print("updateClone() finished")
 
 def zipdir(path, ziph):
@@ -207,7 +247,6 @@ def DownloadZIP(repo):
 
 def loadRepositories():
     global repositories
-    repositories = []
     RemoteRepos = execSSH("ls")
     repositories = []
     for repo in RemoteRepos:
@@ -284,6 +323,11 @@ def setIcon(reponame, path):
     subprocess.run(command, cwd=os.path.join(folder, ".."), stdout=subprocess.DEVNULL,  stderr=subprocess.STDOUT)
 
 
+# loadRepositories()
+loadRepositoriesThread = ThreadWithReturnValue(target=loadRepositories)
+loadRepositoriesThread.start()
+
+
 cloneRepos = Thread(target=updateClone)
 cloneRepos.start()
 
@@ -292,6 +336,3 @@ loadIconsThread.start()
 
 backup1 = Thread(target=makeBackup)
 backup1.start()
-
-repositories = []
-repositories = loadRepositories()

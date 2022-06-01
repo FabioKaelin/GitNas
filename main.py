@@ -11,10 +11,6 @@ import os
 eel.init(os.path.join(__file__, "..", 'web') )
 position = ["", "", 0]
 location = ""
-# @eel.expose
-# def allBranches():
-#     # eel.allBranches(updateBranch())
-#     return "test"
 
 @eel.expose
 def getCommits():
@@ -289,7 +285,6 @@ def loadRepositoriesFunc():
     global position
     position = ["","", 0]
     eel.displayRepositories(repositoriesJs)
-    # return repositoriesJs
 
 eel.start('repos.html', port=8085, size=(1000,800))
 
