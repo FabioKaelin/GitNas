@@ -20,6 +20,7 @@ icons = {
     "py": "python",
     "bat": "bat",
     "gitignore": "git",
+    "gitkeep": "git",
     "git": "git",
     "pyw": "python",
     "md": "markdown",
