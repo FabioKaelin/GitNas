@@ -1,4 +1,11 @@
 #header {
+    display: flex;
+    justify-content: space-between;
+
+    #DokumentationLink{
+        margin-right: 8%;
+    }
+
     width: 110%;
     overflow: hidden;
     height: 50px;
@@ -7,8 +14,8 @@
 
     img {
         max-width: 200px;
-
     }
+
 }
 
 #RepoMenue {

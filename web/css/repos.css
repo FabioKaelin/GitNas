@@ -1,9 +1,19 @@
 #header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   width: 110%;
   overflow: hidden;
   height: 50px;
   background-color: #1e272e;
   padding: 10px;
+}
+
+#header #DokumentationLink {
+  margin-right: 8%;
 }
 
 #header img {
