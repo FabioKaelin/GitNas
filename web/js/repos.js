@@ -25,6 +25,31 @@ function updateDescription(){
     }, 10);
 }
 
+
+document.addEventListener('keydown', logKey);
+searchfocus = false
+function logKey(e) {
+    console.log(e.keyCode)
+    if (e.keyCode > 47 && e.keyCode < 91 && !searchfocus) {
+        searchfocus = true
+        document.getElementById("InputRepo").focus()
+    }
+    setTimeout(() => {
+        regex2 = new RegExp(document.getElementById("InputRepo").value, "i")
+        document.querySelectorAll(".title").forEach(element => {
+            if (regex2.test(element.innerHTML)){
+                element.parentElement.parentElement.style.display = "flex"
+            } else{
+                element.parentElement.parentElement.style.display = "none"
+
+            }
+        });
+
+        // print(regex2.test(reponame))
+    }, 10);
+}
+
+
 eel.expose(displayRepositories)
 function displayRepositories(repositories) {
 
@@ -53,7 +78,7 @@ function displayRepositories(repositories) {
 
 
         imgBearbeiten = document.createElement("img");
-        imgBearbeiten.setAttribute("src", "./images/icons/stift.svg");
+        imgBearbeiten.setAttribute("src", "./images/icons/settings.svg");
         imgBearbeiten.setAttribute("alt", "bearbeiten");
         allowExplorer = true
 

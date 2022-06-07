@@ -10,7 +10,7 @@ import time
 from threading import Thread
 
 
-load_dotenv()
+
 if (len(sys.argv)== 2 and sys.argv[1]== "debug"):
     debugmode = True
 else:
@@ -58,15 +58,13 @@ icons = {
 }
 
 imageTypes = ["png", "jpng", "gif"]
-binTypes = ["docx", "xlsx", "ppx"]
 
-# outputFile = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\output.txt"
-# folder = "C:\\Users\\super\\fabiokaelin\\lehre\\Projekte\\GitNas\\repos"
 outputFile = os.path.join(__file__, "..", "output.txt")
 folder = os.path.join(__file__, "..","web", "repos")
 repositories = []
 
 
+load_dotenv()
 router_ip = os.getenv('ROUTER_IP')
 router_username = os.getenv('ROUTER_USERNAME')
 router_password = os.getenv('ROUTER_PASSWORD')
@@ -348,7 +346,6 @@ def setIcon(reponame, path):
     subprocess.run(command, cwd=os.path.join(folder, ".."), stdout=subprocess.DEVNULL,  stderr=subprocess.STDOUT)
 
 
-# loadRepositories()
 loadRepositoriesThread = ThreadWithReturnValue(target=loadRepositories)
 loadRepositoriesThread.start()
 

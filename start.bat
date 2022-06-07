@@ -1,1 +1,1 @@
-python main.pyw
+python main.py

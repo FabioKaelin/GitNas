@@ -1,5 +1,6 @@
 import PIL
 import eel
+import markdown
 from functions import *
 import zipfile
 from PIL import Image
@@ -49,12 +50,10 @@ def changeBranch(branch):
 @eel.expose
 def openSettings(location1, reponame="errk4j2ej2{[)(86*+snh4ek.-823hbndleor12353"):
     global position
-    print(reponame)
     global location
     location = location1
     if reponame != "errk4j2ej2{[)(86*+snh4ek.-823hbndleor12353":
         position = [reponame, position[1], position[2]]
-    print(position)
     eel.setLocation("repoSettings.html")
 
 @eel.expose
@@ -66,7 +65,6 @@ def backofSettings():
 def getUpdateFill():
     for repo in repositories:
         if repo.name == position[0]:
-            print(repo.name)
             return [position[0], repo.description]
 
 @eel.expose
@@ -85,14 +83,15 @@ def updateRepo(description, icon):
 
 @eel.expose
 def createRepo(name, beschreibung, path):
-    print(name, beschreibung, path)
     execSSH("git init --bare "+ name + ".git")
     execSSH("echo '" + beschreibung + "' > " + name + ".git/description")
     global repositories
-    repositories = []
+    # repositories = []
     repositories = loadRepositories()
     cloneRepos = Thread(target=updateClone)
     cloneRepos.start()
+    loadIconsThread = Thread(target=loadIcons)
+    loadIconsThread.start()
     if path == "empty":
         img = Image.new('RGB', (200, 200), (random.randint(40,200), random.randint(40,200), random.randint(40,200)))
         img.save(os.path.join(folder, "..", "..", "RepoImg.png"))
@@ -149,7 +148,6 @@ def setPosition(repo, path="", iffolder=True):
 
 
     output = execCommandInRepo(repo, "dir /a /B")
-    # print(output, repo)
     if len(output.split("\n")) == 1:
 
         eel.setLocation("emptyRepo.html")
@@ -176,6 +174,7 @@ def getReadme():
 
     with open(positionString, 'r', encoding='UTF-8') as file:
         content = file.read()
+    content = markdown.markdown(content)
     return content
 
 @eel.expose
@@ -280,7 +279,10 @@ def eelGetPath():
 @eel.expose
 def loadRepositoriesFunc():
     repositoriesJs = []
-    repositories = loadRepositoriesThread.join()
+    global repositories
+    if len(repositories) == 0:
+        repositories = loadRepositoriesThread.join()
+
     print(repositories)
     for element in repositories:
         repositoriesJs.append({"name": element.name, "description": element.description})
@@ -296,4 +298,3 @@ def startLoading():
 
 
 eel.start('load.html', port=8085, size=(1000,800))
-print("afd")
