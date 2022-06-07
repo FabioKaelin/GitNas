@@ -16,15 +16,22 @@ location = ""
 
 @eel.expose
 def getCommits():
+    repositories[position[2]]
+    repositories[position[2]].loadCommits()
+    commits = repositories[position[2]].commits
+    commitsJS = []
+    for commit in commits:
+        commitsJS.append([commit.message, commit.hash, commit.date.strftime("%H:%M:%S %d.%m.%Y")])
+    return commitsJS
+
+@eel.expose
+def getTags():
     repoName = position[0]
-    for repo in repositories:
-        if repo.name == repoName:
-            repo.loadCommits()
-            commits = repo.commits
-            commitsJS = []
-            for commit in commits:
-                commitsJS.append([commit.message, commit.hash, commit.date.strftime("%H:%M:%S %d.%m.%Y")])
-            return commitsJS
+    tags = execCommandInRepo(repoName, "git tag").split("\n")
+    if tags[0] == "":
+        return "false"
+    tags.reverse()
+    return tags
 
 @eel.expose
 def updateDescription(name, description):
