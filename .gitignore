@@ -1,7 +1,7 @@
 test.*
 test
 *.lnk
-repos
+# repos
 output.txt
 .env
 __pycache__
@@ -27,8 +27,8 @@ ENV/
 */*/repoIcons/*.*
 !repoIcons
 
-*/repos/*
-!repos
+*/repos/*/
+!*/repos
 
 RepoImg.png
 /web/*.png
