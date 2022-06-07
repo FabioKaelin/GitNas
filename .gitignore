@@ -26,5 +26,9 @@ ENV/
 *.css.map
 */*/repoIcons/*.*
 !repoIcons
+
+*/repos/*
+!repos
+
 RepoImg.png
 /web/*.png
