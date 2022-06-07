@@ -1,9 +1,6 @@
 
 
 eel.eelGetPath()(function(position){
-    // console.log(position)
-    // document.getElementById("repoPath").innerHTML = position[0]
-
     pathSpan = document.getElementById("path")
     removeAllChildNodes(pathSpan)
     pathSpan.appendChild(document.createTextNode("/"))
@@ -16,16 +13,13 @@ eel.eelGetPath()(function(position){
     })
     pathSpan.appendChild(repoPath)
 
-    path1 = position[1] // = "web"
+    path1 = position[1]
     pathArray = path1.split("/")
 
-    console.log(pathArray)
     pathStr = ""
-    console.log(pathArray == [""])
     if (pathArray != [""]){
 
         pathArray.forEach(element => {
-            console.log(element)
             pathStr = pathStr + "/" + element
             link = document.createElement("a")
             link.setAttribute("href", "#")
@@ -37,7 +31,6 @@ eel.eelGetPath()(function(position){
             })
             pathSpan.appendChild(document.createTextNode("/"))
             pathSpan.appendChild(link)
-            // <span id="path">/ <a id="repoPath" href="#">GitNas</a></span>
 
         });
     }
@@ -45,7 +38,6 @@ eel.eelGetPath()(function(position){
 
 eel.getFileEEL()(function(input){
     removeAllChildNodes(document.getElementById("prePreview"))
-    console.log(input)
     if (input[4] == "text"){
         codeDiv = document.createElement("code")
         codeDiv.setAttribute("id", "codePreview")
@@ -59,9 +51,7 @@ eel.getFileEEL()(function(input){
         script = document.createElement("script")
         script.setAttribute("src", "./js/syntax/prism.js")
 
-        // <script src="./js/editor.js"></script>
 
-        // content
         document.getElementById("content").appendChild(script)
         document.getElementById("lines").innerHTML = input[2]
         document.getElementById("size").innerHTML = input[3]

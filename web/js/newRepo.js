@@ -1,13 +1,11 @@
 let RepoNames = []
 
 eel.getRepoNames()(function (input) {
-    console.log(input)
     RepoNames = input
 })
 
 
 function selectIcon(){
-    console.log("seledt icon")
     eel.askImage()(function(path){
         document.getElementById("icon").setAttribute("path", path)
         document.getElementById("icon").value = path.split("/")[path.split("/").length -1]
@@ -28,10 +26,8 @@ function createNewRepo() {
     }
 
     name1 = document.getElementById("name").value
-    console.log(name1)
 
     beschreibung1 = document.getElementById("beschreibung").value
-    console.log(beschreibung1)
     document.getElementById("create").disabled = true
     document.getElementById("reset").disabled = true
     document.getElementById("create").style.display = "none"

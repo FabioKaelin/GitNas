@@ -1,5 +1,4 @@
 repos = document.getElementById("repos")
-console.log("asdf")
 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
@@ -9,9 +8,7 @@ function removeAllChildNodes(parent) {
 
 function updateDescription(){
     allowExplorer = false
-    console.log("update")
     newDescription = document.getElementById("newDescription").value
-    // Funktion zum Ausführen
     eel.updateDescription(document.getElementById("newDescription").getAttribute("currentRepo"), newDescription)
     titlenode = document.getElementById("repos").childNodes
     titlenode.forEach(element => {
@@ -29,7 +26,6 @@ function updateDescription(){
 document.addEventListener('keydown', logKey);
 searchfocus = false
 function logKey(e) {
-    console.log(e.keyCode)
     if (e.keyCode > 47 && e.keyCode < 91 && !searchfocus) {
         searchfocus = true
         document.getElementById("InputRepo").focus()
@@ -45,7 +41,6 @@ function logKey(e) {
             }
         });
 
-        // print(regex2.test(reponame))
     }, 10);
 }
 
@@ -84,45 +79,11 @@ function displayRepositories(repositories) {
 
         imgBearbeiten.addEventListener("click", function(){
             allowExplorer = false
-            // console.log(element.name)
-            // setTimeout(() => {
                 eel.openSettings("repos.html",element.name)
-            // }, 4000);
 
-
-
-            // repos1 = document.getElementById("repos").childNodes
-            // repos1.forEach(element1 => {
-            //     if (element1.childNodes[0].childNodes[0].innerHTML == element.name){
-            //         divElement = document.createElement("div")
-            //         divElement.addEventListener("click", function(){
-            //             allowExplorer = false
-            //             setTimeout(() => {
-            //                 allowExplorer = true
-            //             }, 10);
-            //         })
-            //         divElement.setAttribute("id", "descriptionUpdate")
-            //         inputElement = document.createElement("input")
-            //         inputElement.setAttribute("type", "text")
-            //         inputElement.setAttribute("name", "newDescription")
-            //         inputElement.setAttribute("id", "newDescription")
-            //         inputElement.setAttribute("currentRepo", element.name)
-            //         inputElement.value = element1.childNodes[0].childNodes[1].innerHTML
-            //         buttonElement = document.createElement("button")
-            //         buttonElement.setAttribute("onclick", "updateDescription()")
-            //         buttonElement.innerHTML = "Update"
-            //         divElement.appendChild(inputElement)
-            //         divElement.appendChild(buttonElement)
-            //         console.log(divElement)
-            //         element1.childNodes[0].appendChild(divElement)
-            //     }
-            // });
             setTimeout(() => {
                 allowExplorer = true
             }, 10);
-
-
-            // eel.updateDescription(element.name, "neue beschreibung")
         })
 
         repoDiv.appendChild(repoIcon)
@@ -132,7 +93,6 @@ function displayRepositories(repositories) {
         repoDiv.appendChild(imgBearbeiten)
         repoDiv.addEventListener("click", function(){
             if (allowExplorer){
-                // window.location = "explorer.html"
                 eel.setPosition(element.name)
             }
         })

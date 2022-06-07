@@ -136,8 +136,6 @@ class Commit:
         self.date = ""
 
     def loadDate(self, reponame):
-        # f4c13460d15be5f139bd8d0c522aa39a945f7c15
-        # output = subprocess.run(['git', "log", "-n", "1", "--no-decorate", self.hash], shell=True, cwd=folder+"\\"+reponame , stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")[2].split(" ")[4:-1]
         output = subprocess.run(['git', "log", "-n", "1", "--no-decorate", self.hash], shell=True, cwd=folder+"\\"+reponame , stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")
         if "Date" in output[2]:
             output = output[2].split(" ")[4:-1]
@@ -184,7 +182,6 @@ def execSSH(command):
         output = [line.replace('\n', '') for line in ssh_stdout.readlines()]
         return output
     except paramiko.SSHException:
-        # print("paramiko.SSHException")
         time.sleep(0.1)
         ssh = paramiko.SSHClient()
 
@@ -199,7 +196,6 @@ def execSSH(command):
         output = [line.replace('\n', '') for line in ssh_stdout.readlines()]
         return output
     except Exception as e:
-        # print("SSH Error")
         time.sleep(0.1)
         ssh = paramiko.SSHClient()
 
@@ -243,15 +239,9 @@ def updateClone():
     updateRepoArray = []
     for repo in RemoteRepos:
         updateCloneOne(repo,localRepos)
-        # updateCloneOneThread = Thread(target=updateCloneOne, args=(repo,localRepos,))
-        # updateCloneOneThread.start()
-        # updateRepoArray.append(updateCloneOneThread)
-    # for thread in updateRepoArray:
-    #     thread.join()
     print("updateClone() finished")
 
 def zipdir(path, ziph):
-    # ziph is zipfile handle
     for root, dirs, files in os.walk(path):
         if not( "/.git" in root or "\\.git" in root):
             for file in files:
@@ -260,7 +250,6 @@ def zipdir(path, ziph):
                                         os.path.join(path, '..')))
 
 def DownloadZIP(repo):
-    # "C:\Users\super\Downloads\PowerToysSetup-0.58.0-x64.exe"
     from datetime import datetime
     ts = datetime.timestamp(datetime.now())
     with zipfile.ZipFile('C:\\Users\\'+str(os.getlogin())+'\\Downloads\\'+repo+ "-"+ str(ts) +".zip", 'w', zipfile.ZIP_DEFLATED) as zipf:
@@ -322,7 +311,6 @@ def replaceTags(text):
     return text
 
 def getBranches(reponame):
-    # execCommandInRepo("GitGui", "git branch -a").split("\n")[:-1]
     output = subprocess.run(["git", "branch"], shell=True, cwd=folder+"\\"+reponame , stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")
     branches = []
     currentBranch = ""

@@ -1,5 +1,4 @@
 eel.getCloneEEL()(function (input) {
-    // console.log(input)
     document.getElementById("CodeContentURL").innerHTML = input.Url
     document.getElementById("CodeContentRemote").innerHTML = input.Remote
     document.getElementById("CodeContentClone").innerHTML = input.Clone
@@ -24,7 +23,6 @@ document.addEventListener("click", function () {
     document.getElementById("CodeContent").style.display = "none"
     document.getElementById("BranchesContent").style.display = "none"
 })
-// console.log(CodeButton)
 CodeButton.addEventListener("click", function () {
     setTimeout(() => {
         document.getElementById("CodeContent").style.display = "block"
@@ -87,11 +85,9 @@ setTimeout(() => {
     eel.expose(displayStructure);
     function displayStructure(input) {
         removeAllChildNodes(explorer);
-        // console.log("DisplayStructure")
         structure = input[1];
 
         structure.forEach(element => {
-            // console.log(element)
             explorerContent = document.createElement("div")
             explorerContent.setAttribute("class", "explorerContent")
             explorerContent.addEventListener("click", function () {
@@ -111,17 +107,11 @@ setTimeout(() => {
             explorerContentHead.appendChild(spanName)
             explorerContent.appendChild(explorerContentHead)
 
-
-            // lastUpdate = document.createElement("span")
-            // lastUpdate.setAttribute("class", "lastUpdate")
-            // lastUpdate.innerHTML = "unknown"
-            // explorerContent.appendChild(lastUpdate)
             document.getElementById("explorer").appendChild(explorerContent)
         });
 
 
 
-        // console.log(structure);
     }
 }, 10);
 
@@ -131,8 +121,6 @@ function download() {
 }
 
 eel.eelGetPath()(function (position) {
-    // console.log(position)
-    // document.getElementById("repoPath").innerHTML = position[0]
 
     pathSpan = document.getElementById("path")
     removeAllChildNodes(pathSpan)
@@ -146,7 +134,7 @@ eel.eelGetPath()(function (position) {
     })
     pathSpan.appendChild(repoPath)
 
-    path1 = position[1] // = "web"
+    path1 = position[1]
     pathArray = path1.split("/")
 
     pathStr = ""
@@ -164,7 +152,6 @@ eel.eelGetPath()(function (position) {
             })
             pathSpan.appendChild(document.createTextNode("/"))
             pathSpan.appendChild(link)
-            // <span id="path">/ <a id="repoPath" href="#">GitNas</a></span>
 
         });
     }

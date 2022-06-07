@@ -1,6 +1,4 @@
-// CodeRemote
 eel.getCloneEEL()(function(input){
-    console.log(input)
     document.getElementById("CodeContentURL").innerHTML = input.Url
     document.getElementById("CodeContentRemote").innerHTML = input.Remote
     document.getElementById("CodeContentClone").innerHTML = input.Clone
@@ -13,7 +11,6 @@ const CodeButton = document.getElementById("ShowCode")
 document.addEventListener("click", function(){
     document.getElementById("CodeContent").style.display = "none"
 })
-console.log(CodeButton)
 CodeButton.addEventListener("click", function(){
 
     setTimeout(() => {
@@ -28,8 +25,6 @@ const CopyToClipboard = function(id){
 }
 
 eel.eelGetPath()(function(position){
-    // console.log(position)
-    // document.getElementById("repoPath").innerHTML = position[0]
 
     pathSpan = document.getElementById("path")
     removeAllChildNodes(pathSpan)
@@ -43,7 +38,7 @@ eel.eelGetPath()(function(position){
     })
     pathSpan.appendChild(repoPath)
 
-    path1 = position[1] // = "web"
+    path1 = position[1]
     pathArray = path1.split("/")
 
     pathStr = ""
@@ -61,7 +56,6 @@ eel.eelGetPath()(function(position){
             })
             pathSpan.appendChild(document.createTextNode("/"))
             pathSpan.appendChild(link)
-            // <span id="path">/ <a id="repoPath" href="#">GitNas</a></span>
 
         });
     }

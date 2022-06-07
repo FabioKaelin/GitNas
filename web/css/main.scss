@@ -178,7 +178,6 @@ html {
 
     hr {
         margin: 0px;
-        // display: none;
         visibility: hidden;
         opacity: 0;
         transition: visibility 0s, opacity 0.2s, width 0.2s, height 0.2s linear;
@@ -204,14 +203,12 @@ html {
     height: max-content;
 
     button {
-        // display: block;
         visibility: visible;
         opacity: 1;
         position: block;
     }
 
     hr {
-        // display: block;
         visibility: visible;
         opacity: 1;
         position: block;

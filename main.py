@@ -86,7 +86,6 @@ def createRepo(name, beschreibung, path):
     execSSH("git init --bare "+ name + ".git")
     execSSH("echo '" + beschreibung + "' > " + name + ".git/description")
     global repositories
-    # repositories = []
     repositories = loadRepositories()
     cloneRepos = Thread(target=updateClone)
     cloneRepos.start()
@@ -204,11 +203,8 @@ def getStructureEEL():
     structure = getStructure(position[0], position[1])
 
     repo = repositories[position[2]]
-    # repo.load()
     eel.displaybranches([repo.branches, repo.currentBranch])
 
-
-    # structure = getStructure(position[0], position[1])
     structurejs = []
     folderJs = []
     fileJs = []
@@ -261,7 +257,7 @@ def getFileEEL():
                     size = size / 1024
                     sizeString = str(round(size, 2))+" GB"
         if extensionName in imageTypes:
-            content = "<img id='FileImage'  src='./repos"+ positionString.replace(folder, "").replace("\\", "/") +"' alt='Image'>"
+            content = "<img id='FileImage' width='100%' src='./repos"+ positionString.replace(folder, "").replace("\\", "/") +"' alt='Image'>"
         else:
             content = "Dieses Dateiformat ("+ extensionName+") wird nicht unterstützt"
         return [content, extensionName, "Uncountable", sizeString, "img"]
