@@ -8,11 +8,11 @@ eel.getCloneEEL()(function (input) {
 
 eel.getReadme()(function (content) {
     var mainDiv = document.getElementById("markdown");
+    if (content == "false") {
+        mainDiv.parentNode.removeChild(mainDiv);
+        return
+    }
     mainDiv.innerHTML = content;
-    // if (content == "false") {
-    //     mainDiv.parentNode.removeChild(mainDiv);
-    //     return
-    // }
 
     // var updateContent = ""
 

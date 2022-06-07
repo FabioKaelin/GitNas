@@ -174,6 +174,7 @@ def getReadme():
 
     with open(positionString, 'r', encoding='UTF-8') as file:
         content = file.read()
+        content = content.replace("](./", "](./repos/" + position[0] + "/")
     content = markdown.markdown(content)
     return content
 
