@@ -101,15 +101,5 @@ function displayRepositories(repositories) {
 
 }
 
-/*
-<div class="repo">
-    <span>
-        <span class="title">Name3(GitNas)</span>
-        <p class="description">Ich bin eine Beschreibung für Name3</p>
-    </span>
-    <img src="./images/stift.svg" alt="Bearbeiten">
-</div>
- */
-
 eel.loadRepositoriesFunc();
 
