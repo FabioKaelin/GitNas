@@ -1,4 +1,4 @@
-eel.getCloneEEL()(function(input){
+eel.getCloneEEL()(function (input) {
     document.getElementById("CodeContentURL").innerHTML = input.Url
     document.getElementById("CodeContentRemote").innerHTML = input.Remote
     document.getElementById("CodeContentClone").innerHTML = input.Clone
@@ -12,18 +12,18 @@ loader.setAttribute("class", "loader")
 document.getElementById("tags").appendChild(loader)
 
 const CodeButton = document.getElementById("ShowCode")
-document.addEventListener("click", function(){
+document.addEventListener("click", function () {
     document.getElementById("CodeContent").style.display = "none"
 })
-CodeButton.addEventListener("click", function(){
+CodeButton.addEventListener("click", function () {
 
     setTimeout(() => {
 
-    document.getElementById("CodeContent").style.display = "block"
+        document.getElementById("CodeContent").style.display = "block"
     }, 3);
 })
 
-const CopyToClipboard = function(id){
+const CopyToClipboard = function (id) {
     var copyText = document.getElementById(id);
     navigator.clipboard.writeText(copyText.innerHTML);
 }
@@ -31,10 +31,10 @@ const CopyToClipboard = function(id){
 tags = document.getElementById("tags")
 
 
-eel.getTags()(function(input){
+eel.getTags()(function (input) {
     removeAllChildNodes(tags);
     console.log(input)
-    if (input == "false"){
+    if (input == "false") {
         document.getElementById("gesamtTags").innerHTML = "0"
         return
     }
@@ -72,7 +72,7 @@ eel.getTags()(function(input){
 })
 
 
-eel.eelGetPath()(function(position){
+eel.eelGetPath()(function (position) {
 
     pathSpan = document.getElementById("path")
     removeAllChildNodes(pathSpan)
@@ -80,7 +80,7 @@ eel.eelGetPath()(function(position){
     repoPath = document.createElement("a")
     repoPath.setAttribute("href", "#")
     repoPath.innerHTML = position[0]
-    repoPath.addEventListener("click",function(){
+    repoPath.addEventListener("click", function () {
         eel.setPosition(position[0])
         location.reload()
     })
@@ -90,7 +90,7 @@ eel.eelGetPath()(function(position){
     pathArray = path1.split("/")
 
     pathStr = ""
-    if (pathArray != [""]){
+    if (pathArray != [""]) {
 
         pathArray.forEach(element => {
             pathStr = pathStr + "/" + element
@@ -98,7 +98,7 @@ eel.eelGetPath()(function(position){
             link.setAttribute("href", "#")
             link.setAttribute("pfad", pathStr)
             link.innerHTML = element
-            link.addEventListener("click", function(){
+            link.addEventListener("click", function () {
                 eel.setPosition(position[0], this.getAttribute("pfad"))
                 location.reload()
             })

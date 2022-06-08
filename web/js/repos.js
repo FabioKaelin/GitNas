@@ -6,13 +6,13 @@ function removeAllChildNodes(parent) {
     }
 }
 
-function updateDescription(){
+function updateDescription() {
     allowExplorer = false
     newDescription = document.getElementById("newDescription").value
     eel.updateDescription(document.getElementById("newDescription").getAttribute("currentRepo"), newDescription)
     titlenode = document.getElementById("repos").childNodes
     titlenode.forEach(element => {
-        if (element.childNodes[0].childNodes[0].innerHTML == document.getElementById("newDescription").getAttribute("currentRepo")){
+        if (element.childNodes[0].childNodes[0].innerHTML == document.getElementById("newDescription").getAttribute("currentRepo")) {
             element.childNodes[0].childNodes[1].innerHTML = newDescription
         }
     });
@@ -33,14 +33,13 @@ function logKey(e) {
     setTimeout(() => {
         regex2 = new RegExp(document.getElementById("InputRepo").value, "i")
         document.querySelectorAll(".title").forEach(element => {
-            if (regex2.test(element.innerHTML)){
+            if (regex2.test(element.innerHTML)) {
                 element.parentElement.parentElement.style.display = "flex"
-            } else{
+            } else {
                 element.parentElement.parentElement.style.display = "none"
 
             }
         });
-
     }, 10);
 }
 
@@ -67,7 +66,7 @@ function displayRepositories(repositories) {
 
 
         repoIcon = document.createElement("img");
-        repoIcon.setAttribute("src", "./images/repoIcons/"+ element.name +".png");
+        repoIcon.setAttribute("src", "./images/repoIcons/" + element.name + ".png");
         repoIcon.setAttribute("alt", "Icon");
         repoIcon.setAttribute("class", "icon");
 
@@ -77,9 +76,9 @@ function displayRepositories(repositories) {
         imgBearbeiten.setAttribute("alt", "bearbeiten");
         allowExplorer = true
 
-        imgBearbeiten.addEventListener("click", function(){
+        imgBearbeiten.addEventListener("click", function () {
             allowExplorer = false
-                eel.openSettings("repos.html",element.name)
+            eel.openSettings("repos.html", element.name)
 
             setTimeout(() => {
                 allowExplorer = true
@@ -91,8 +90,8 @@ function displayRepositories(repositories) {
         textSpan.appendChild(pDescription)
         repoDiv.appendChild(textSpan)
         repoDiv.appendChild(imgBearbeiten)
-        repoDiv.addEventListener("click", function(){
-            if (allowExplorer){
+        repoDiv.addEventListener("click", function () {
+            if (allowExplorer) {
                 eel.setPosition(element.name)
             }
         })
