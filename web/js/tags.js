@@ -5,8 +5,6 @@ eel.getCloneEEL()(function (input) {
     document.getElementById("CodeContentPush").innerHTML = input.Push
 })
 
-
-
 loader = document.createElement("div")
 loader.setAttribute("class", "loader")
 document.getElementById("tags").appendChild(loader)
@@ -15,10 +13,9 @@ const CodeButton = document.getElementById("ShowCode")
 document.addEventListener("click", function () {
     document.getElementById("CodeContent").style.display = "none"
 })
+
 CodeButton.addEventListener("click", function () {
-
     setTimeout(() => {
-
         document.getElementById("CodeContent").style.display = "block"
     }, 3);
 })
@@ -30,7 +27,6 @@ const CopyToClipboard = function (id) {
 
 tags = document.getElementById("tags")
 
-
 eel.getTags()(function (input) {
     removeAllChildNodes(tags);
     console.log(input)
@@ -39,7 +35,6 @@ eel.getTags()(function (input) {
         return
     }
     document.getElementById("gesamtTags").innerHTML = input.length
-
     input.forEach(element => {
         explorerContent = document.createElement("div")
         explorerContent.setAttribute("class", "tagContent")
@@ -47,33 +42,11 @@ eel.getTags()(function (input) {
         messageSpan.setAttribute("class", "message")
         messageSpan.innerHTML = element
         explorerContent.appendChild(messageSpan)
-
-        // dataDiv = document.createElement("div")
-        // dataDiv.setAttribute("class", "data")
-
-
-        // dateSpan = document.createElement("span")
-        // dateSpan.setAttribute("class", "date")
-        // dateSpan.innerHTML = element[2]
-
-        // explorerContent.appendChild(document.createElement("br"))
-
-        // hashSpan = document.createElement("span")
-        // hashSpan.setAttribute("class", "hash")
-        // hashSpan.innerHTML = element[1]
-        // dataDiv.appendChild(hashSpan)
-        // dataDiv.appendChild(dateSpan)
-
-        // explorerContent.appendChild(dataDiv)
-
-
         tags.appendChild(explorerContent)
     });
 })
 
-
 eel.eelGetPath()(function (position) {
-
     pathSpan = document.getElementById("path")
     removeAllChildNodes(pathSpan)
     pathSpan.appendChild(document.createTextNode("/"))
@@ -85,13 +58,10 @@ eel.eelGetPath()(function (position) {
         location.reload()
     })
     pathSpan.appendChild(repoPath)
-
     path1 = position[1]
     pathArray = path1.split("/")
-
     pathStr = ""
     if (pathArray != [""]) {
-
         pathArray.forEach(element => {
             pathStr = pathStr + "/" + element
             link = document.createElement("a")

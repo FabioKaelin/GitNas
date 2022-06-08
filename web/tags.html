@@ -12,38 +12,37 @@
 </head>
 
 <body>
-
     <div id="header">
         <img id="schriftzug" src="./images/Schriftzug.png" alt="GitNas">
-        <!-- img wird zu link zu Repoübersicht/home -->
         <span id="path">/ <a id="repoPath" href="#">GitNas</a></span>
     </div>
-
-
     <div id="content">
         <div id="TagsMenue">
             <button id="ShowCode">Code</button>
             <div id="CodeContent" style="display: none;">
                 <div>
-                    URL: <code onclick="CopyToClipboard('CodeContentURL')" id="CodeContentURL">git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
+                    URL: <code onclick="CopyToClipboard('CodeContentURL')"
+                        id="CodeContentURL">git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
                 </div>
                 <hr>
                 <div>
-                    Remote: <code onclick="CopyToClipboard('CodeContentRemote')" id="CodeContentRemote">git add remote git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
+                    Remote: <code onclick="CopyToClipboard('CodeContentRemote')"
+                        id="CodeContentRemote">git add remote git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
                 </div>
                 <hr>
                 <div>
-                    Clone: <code onclick="CopyToClipboard('CodeContentClone')" id="CodeContentClone">git clone git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
+                    Clone: <code onclick="CopyToClipboard('CodeContentClone')"
+                        id="CodeContentClone">git clone git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
                 </div>
                 <hr>
                 <div>
-                    Push: <code onclick="CopyToClipboard('CodeContentPush')" id="CodeContentPush">git clone git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
+                    Push: <code onclick="CopyToClipboard('CodeContentPush')"
+                        id="CodeContentPush">git clone git@github.com:FabioKaelin/Cleo-Messager-Web.git</code>
                 </div>
             </div>
             <button onclick="window.location = 'explorer.html'">Explorer</button>
             <span>Gesamt Tags: <span id="gesamtTags">?</span></span>
         </div>
-        <!-- <hr class="hearHr" style="margin-left: 5%; width: 89.5%;"> -->
         <div id="tags">
         </div>
     </div>

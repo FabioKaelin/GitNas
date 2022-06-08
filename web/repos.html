@@ -12,21 +12,19 @@
 </head>
 
 <body>
-    <script type="text/javascript" src="/eel.js"></script>
     <div id="header">
-        <img id="schriftzug"  src="./images/Schriftzug.png" alt="GitNas">
+        <img id="schriftzug" src="./images/Schriftzug.png" alt="GitNas">
         <button id="DokumentationLink" onclick=" window.open('Dokumentation.pdf','_blank')">Dokumentation</button>
     </div>
-
     <div id="content">
         <div id="RepoMenue">
             <input type="text" name="repo" onfocusout="searchfocus=false" id="InputRepo" placeholder="GitNasRepo">
             <button onclick="window.location = 'newRepo.html'">New</button>
         </div>
-        <!-- <hr class="hearHr" style="margin-left: 5%; width: 89.5%;"> -->
         <div id="repos">
         </div>
     </div>
+    <script type="text/javascript" src="/eel.js"></script>
     <script src="./js/main.js"></script>
     <script src="./js/repos.js"></script>
 </body>

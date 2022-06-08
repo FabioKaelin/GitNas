@@ -8,8 +8,6 @@
     img {
         max-width: 200px;
     }
-
-
 }
 
 #NewRepoMenue {
@@ -22,8 +20,8 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 
-    #CodeContent{
-        overflow-x:auto;
+    #CodeContent {
+        overflow-x: auto;
         white-space: nowrap;
         word-break: keep-all;
         padding: 10px;
@@ -37,11 +35,10 @@
         padding: 10px;
         box-shadow: -4px -2px 10px -1px #000000;
 
-        hr{
-            position:sticky;
+        hr {
+            position: sticky;
             left: 0px;
         }
-
     }
 }
 

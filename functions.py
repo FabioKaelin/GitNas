@@ -10,8 +10,7 @@ import time
 from threading import Thread
 
 
-
-if (len(sys.argv)== 2 and sys.argv[1]== "debug"):
+if (len(sys.argv) == 2 and sys.argv[1] == "debug"):
     debugmode = True
 else:
     debugmode = False
@@ -63,7 +62,7 @@ icons = {
 imageTypes = ["png", "jpeg", "gif", "jpg"]
 
 outputFile = os.path.join(__file__, "..", "output.txt")
-folder = os.path.join(__file__, "..","web", "repos")
+folder = os.path.join(__file__, "..", "web", "repos")
 repositories = []
 
 
@@ -78,13 +77,16 @@ class ThreadWithReturnValue(Thread):
                  args=(), kwargs={}, Verbose=None):
         Thread.__init__(self, group, target, name, args, kwargs)
         self._return = None
+
     def run(self):
         if self._target is not None:
             self._return = self._target(*self._args,
-                                                **self._kwargs)
+                                        **self._kwargs)
+
     def join(self, *args):
         Thread.join(self, *args)
         return self._return
+
 
 class Repository:
     def __init__(self, name):
@@ -94,13 +96,14 @@ class Repository:
         self.path = os.path.join(folder, name+".git")
         self.commits = []
 
-
     def loadDescription(self):
-        self.description = execSSH("cd " + self.name + ".git; cat description")[0]
+        self.description = execSSH(
+            "cd " + self.name + ".git; cat description")[0]
 
     def load(self):
         localRepos = execCommandInFolder("dir /a /B").split("\n")[:-1]
-        self.description = execSSH("cd " + self.name + ".git; cat description")[0]
+        self.description = execSSH(
+            "cd " + self.name + ".git; cat description")[0]
         if self.name in localRepos:
             execCommandInRepoOhne(self.name, "git restore .")
             execCommandInRepoOhne(self.name, "git pull")
@@ -112,8 +115,9 @@ class Repository:
         self.currentBranch = output[1]
 
     def loadCommits(self):
-        self.commits=[]
-        content = execCommandInRepo(self.name, "git log --decorate=no --date-order --format=oneline -n 1000").split("\n")[:-1]
+        self.commits = []
+        content = execCommandInRepo(
+            self.name, "git log --decorate=no --date-order --format=oneline -n 1000").split("\n")[:-1]
         for commit in content:
             commitList = commit.split(" ", 1)
             commit = Commit()
@@ -126,11 +130,13 @@ class Repository:
         return getClone(self.name)
 
     def setDescription(self, description):
-        execSSH("echo '" + description + "' > " + self.name + ".git/description")
+        execSSH("echo '" + description + "' > " +
+                self.name + ".git/description")
         self.description = description
 
     def __repr__(self):
         return '<Repo name='+self.name+'>'
+
 
 class Commit:
     def __init__(self):
@@ -139,24 +145,30 @@ class Commit:
         self.date = ""
 
     def loadDate(self, reponame):
-        output = subprocess.run(['git', "log", "-n", "1", "--no-decorate", self.hash], shell=True, cwd=folder+"\\"+reponame , stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")
+        output = subprocess.run(['git', "log", "-n", "1", "--no-decorate", self.hash], shell=True,
+                                cwd=folder+"\\"+reponame, stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")
         if "Date" in output[2]:
             output = output[2].split(" ")[4:-1]
         else:
             output = output[3].split(" ")[4:-1]
-        self.date=datetime.datetime.strptime(output[1]+" "+output[0]+" "+output[3]+", "+output[2], "%d %b %Y, %H:%M:%S")
+        self.date = datetime.datetime.strptime(
+            output[1]+" "+output[0]+" "+output[3]+", "+output[2], "%d %b %Y, %H:%M:%S")
 
     def __repr__(self):
-        return '<Commit message='+ self.message+'>'
+        return '<Commit message=' + self.message+'>'
+
 
 def execCommandInFolder(command):
-    os.system('cd "' + folder.replace("/", "\\") + '"' + " & "+ command +" > " + outputFile + " 2>nul")
+    os.system('cd "' + folder.replace("/", "\\") + '"' +
+              " & " + command + " > " + outputFile + " 2>nul")
     with open(outputFile, 'r', encoding='UTF-8') as file:
         content = file.read()
     return content
 
+
 def execCommandInRepo(repo, command):
-    output = subprocess.run(command, shell=True, cwd=os.path.join(folder, repo) , stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1]
+    output = subprocess.run(command, shell=True, cwd=os.path.join(
+        folder, repo), stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1]
     if debugmode:
         print("----------execCommandInRepo----------------start")
         print("repo:", repo)
@@ -164,11 +176,16 @@ def execCommandInRepo(repo, command):
         print("----------execCommandInRepo----------------ende")
     return output
 
+
 def execCommandInFolderOhne(command):
-    os.system('cd "' + folder.replace("/", "\\") + '"' + " & "+ command + " >nul 2>nul")
+    os.system('cd "' + folder.replace("/", "\\") +
+              '"' + " & " + command + " >nul 2>nul")
+
 
 def execCommandInRepoOhne(repo, command):
-    os.system('cd "' + folder.replace("/", "\\") + '\\' + repo + '"' + " & "+ command + " >nul 2>nul")
+    os.system('cd "' + folder.replace("/", "\\") + '\\' +
+              repo + '"' + " & " + command + " >nul 2>nul")
+
 
 def execSSH(command):
     try:
@@ -181,7 +198,8 @@ def execSSH(command):
                     password=router_password,
                     look_for_keys=False)
 
-        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd /;cd volume1/GitNas/repository; " + command)
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(
+            "cd /;cd volume1/GitNas/repository; " + command)
         output = [line.replace('\n', '') for line in ssh_stdout.readlines()]
         return output
     except paramiko.SSHException:
@@ -195,7 +213,8 @@ def execSSH(command):
                     password=router_password,
                     look_for_keys=False)
 
-        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd /;cd volume1/GitNas/repository; " + command)
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(
+            "cd /;cd volume1/GitNas/repository; " + command)
         output = [line.replace('\n', '') for line in ssh_stdout.readlines()]
         return output
     except Exception as e:
@@ -209,54 +228,62 @@ def execSSH(command):
                     password=router_password,
                     look_for_keys=False)
 
-        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd /;cd volume1/GitNas/repository; " + command)
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(
+            "cd /;cd volume1/GitNas/repository; " + command)
         output = [line.replace('\n', '') for line in ssh_stdout.readlines()]
         return output
 
+
 def getClone(name):
     return "ssh://"+router_username+"@"+router_ip+":/volume1/GitNas/repository/" + name + ".git"
+
 
 def updateCloneOne(repo, localRepos):
     global repositories
     if repo.replace(".git", "") in localRepos:
         try:
-            execCommandInRepoOhne(repo.replace(".git",""), "git restore .")
+            execCommandInRepoOhne(repo.replace(".git", ""), "git restore .")
         except Exception as e:
             a = ""
         if (len(execCommandInRepo("GitGui", "git status").split("\n")) != 4):
-            execCommandInRepoOhne(repo.replace(".git",""), "git pull")
+            execCommandInRepoOhne(repo.replace(".git", ""), "git pull")
     else:
-        execCommandInFolderOhne("git clone " + getClone(repo.replace(".git","")))
+        execCommandInFolderOhne(
+            "git clone " + getClone(repo.replace(".git", "")))
 
-    for line in execCommandInRepo(repo.replace(".git",""), "git branch -a").split("\n")[:-1]:
+    for line in execCommandInRepo(repo.replace(".git", ""), "git branch -a").split("\n")[:-1]:
         if "remotes/origin/" in line[2:] and not "remotes/origin/HEAD" in line[2:]:
-            execCommandInRepoOhne(repo.replace(".git",""), "git checkout " + line[2:].replace("remotes/origin/", ""))
+            execCommandInRepoOhne(repo.replace(
+                ".git", ""), "git checkout " + line[2:].replace("remotes/origin/", ""))
 
+    if "main" in execCommandInRepo(repo.replace(".git", ""), "git branch -a"):
+        execCommandInRepoOhne(repo.replace(".git", ""), "git checkout main")
 
-    if "main" in execCommandInRepo(repo.replace(".git",""), "git branch -a"):
-        execCommandInRepoOhne(repo.replace(".git",""), "git checkout main")
 
 def updateClone():
     RemoteRepos = execSSH("ls")
     localRepos = execCommandInFolder("dir /a /B").split("\n")[:-1]
     updateRepoArray = []
     for repo in RemoteRepos:
-        updateCloneOne(repo,localRepos)
+        updateCloneOne(repo, localRepos)
     print("updateClone() finished")
+
 
 def zipdir(path, ziph):
     for root, dirs, files in os.walk(path):
-        if not( "/.git" in root or "\\.git" in root):
+        if not("/.git" in root or "\\.git" in root):
             for file in files:
                 ziph.write(os.path.join(root, file),
-                        os.path.relpath(os.path.join(root, file),
-                                        os.path.join(path, '..')))
+                           os.path.relpath(os.path.join(root, file),
+                                           os.path.join(path, '..')))
+
 
 def DownloadZIP(repo):
     from datetime import datetime
     ts = datetime.timestamp(datetime.now())
-    with zipfile.ZipFile('C:\\Users\\'+str(os.getlogin())+'\\Downloads\\'+repo+ "-"+ str(ts) +".zip", 'w', zipfile.ZIP_DEFLATED) as zipf:
+    with zipfile.ZipFile('C:\\Users\\'+str(os.getlogin())+'\\Downloads\\'+repo + "-" + str(ts) + ".zip", 'w', zipfile.ZIP_DEFLATED) as zipf:
         zipdir(os.path.join(folder, repo), zipf)
+
 
 def loadRepositories():
     global repositories
@@ -268,6 +295,7 @@ def loadRepositories():
         repo.loadDescriptionThread.join()
     return repositories
 
+
 def getStructure(repo, path=""):
     position = [repo, path]
     positionString = os.path.join(folder, position[0], position[1])
@@ -275,8 +303,10 @@ def getStructure(repo, path=""):
     structure = []
     for file in content:
         if (file != ".git"):
-            structure.append([file, os.path.isdir(os.path.join(folder, position[0], position[1], file))])
+            structure.append([file, os.path.isdir(
+                os.path.join(folder, position[0], position[1], file))])
     return structure
+
 
 def getFile(repo, path=""):
     try:
@@ -307,14 +337,17 @@ def getFile(repo, path=""):
     except:
         return True
 
+
 def replaceTags(text):
     text = text.replace(";", "&nbsp;")
     text = text.replace("<", "&lt;")
     text = text.replace(">", "&gt;")
     return text
 
+
 def getBranches(reponame):
-    output = subprocess.run(["git", "branch"], shell=True, cwd=folder+"\\"+reponame , stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")
+    output = subprocess.run(["git", "branch"], shell=True, cwd=folder+"\\" +
+                            reponame, stdout=subprocess.PIPE).stdout.decode('utf-8')[:-1].split("\n")
     branches = []
     currentBranch = ""
     for line in output:
@@ -323,18 +356,25 @@ def getBranches(reponame):
             currentBranch = line[2:]
     return [branches, currentBranch]
 
+
 def makeBackup():
     execSSH("git add .")
     execSSH("git commit -m'Modify'")
     execSSH("git push")
 
+
 def loadIcons():
-    command = ["pscp","-pw",router_password, "-r", router_username +"@"+router_ip+":/volume1/GitNas/repository/.icons/",os.path.join(folder, "..", "images","repoIcons") ]
-    subprocess.run(command, cwd=folder, shell=True, stdout=subprocess.DEVNULL,  stderr=subprocess.STDOUT)
+    command = ["pscp", "-pw", router_password, "-r", router_username + "@"+router_ip +
+               ":/volume1/GitNas/repository/.icons/", os.path.join(folder, "..", "images", "repoIcons")]
+    subprocess.run(command, cwd=folder, shell=True,
+                   stdout=subprocess.DEVNULL,  stderr=subprocess.STDOUT)
+
 
 def setIcon(reponame, path):
-    command = ["pscp","-pw",router_password, path, router_username +"@"+router_ip+":/volume1/GitNas/repository/.icons/"+ reponame+".png"]
-    subprocess.run(command, cwd=os.path.join(folder, ".."), stdout=subprocess.DEVNULL,  stderr=subprocess.STDOUT)
+    command = ["pscp", "-pw", router_password, path, router_username +
+               "@"+router_ip+":/volume1/GitNas/repository/.icons/" + reponame+".png"]
+    subprocess.run(command, cwd=os.path.join(folder, ".."),
+                   stdout=subprocess.DEVNULL,  stderr=subprocess.STDOUT)
 
 
 loadRepositoriesThread = ThreadWithReturnValue(target=loadRepositories)
@@ -349,5 +389,3 @@ loadIconsThread.start()
 
 backup1 = Thread(target=makeBackup)
 backup1.start()
-
-

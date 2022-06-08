@@ -5,7 +5,6 @@ eel.getCloneEEL()(function (input) {
     document.getElementById("CodeContentPush").innerHTML = input.Push
 })
 
-
 eel.getUpdateFill()(function (input) {
     document.getElementById("repoPath").innerHTML = input[0]
     document.getElementById("beschreibung").value = input[1]
@@ -20,15 +19,13 @@ function selectIcon() {
     })
 }
 
-
 const CodeButton = document.getElementById("ShowCode")
 document.addEventListener("click", function () {
     document.getElementById("CodeContent").style.display = "none"
 })
+
 CodeButton.addEventListener("click", function () {
-
     setTimeout(() => {
-
         document.getElementById("CodeContent").style.display = "block"
     }, 3);
 })
@@ -39,7 +36,6 @@ const CopyToClipboard = function (id) {
 }
 
 settings = document.getElementById("Settings")
-
 
 document.getElementById("update").addEventListener("click", function () {
     description = document.getElementById("beschreibung").value

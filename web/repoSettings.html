@@ -12,14 +12,10 @@
 </head>
 
 <body>
-
     <div id="header">
         <img id="schriftzug" src="./images/Schriftzug.png" alt="GitNas">
-        <!-- img wird zu link zu Repoübersicht/home -->
         <span id="path">/ <a id="repoPath" href="#">GitNas</a></span>
     </div>
-
-
     <div id="content">
         <div id="SettingsMenue">
             <button id="ShowCode">Code</button>
@@ -45,7 +41,6 @@
                 </div>
             </div>
         </div>
-        <!-- <hr class="hearHr" style="margin-left: 5%; width: 89.5%;"> -->
         <div id="Settings">
             <form action="#">
                 <p>
@@ -53,7 +48,8 @@
                         placeholder="Beschreibung" id="beschreibung">
                 </p>
                 <p>
-                    Icon: <input type="button" onclick="selectIcon()" name="icon"  value="Select"   path="default" id="icon"> <input type="button" onclick="clearIcon()" value="neues Icon">
+                    Icon: <input type="button" onclick="selectIcon()" name="icon" value="Select" path="default"
+                        id="icon"> <input type="button" onclick="clearIcon()" value="neues Icon">
                     <br>
                     <img src="./images/repoIcons/GitNas.png" id="iconPreview" alt="icon">
                 </p>
@@ -61,9 +57,7 @@
                     <input type="button" id="update" value="Update">
                     <input id="verwerfen" type="button" onclick="eel.backofSettings()" value="Verwerfen">
                 </p>
-
             </form>
-
         </div>
     </div>
     <script type="text/javascript" src="/eel.js"></script>

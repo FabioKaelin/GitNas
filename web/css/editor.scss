@@ -9,13 +9,15 @@
         max-width: 200px;
     }
 
-    #path{
+    #path {
         font-size: xx-large;
-        a{
+
+        a {
             text-decoration: none;
             color: rgb(126, 154, 165);
         }
-        a:hover{
+
+        a:hover {
             font-weight: bold;
             color: rgb(175, 196, 204);
         }
@@ -41,9 +43,9 @@
     background-color: rgb(23, 31, 37);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-
 }
-.copy-to-clipboard-button{
+
+.copy-to-clipboard-button {
     height: min-content;
 }
 

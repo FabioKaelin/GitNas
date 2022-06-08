@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
 
-    #DokumentationLink{
+    #DokumentationLink {
         margin-right: 8%;
     }
 
@@ -15,7 +15,6 @@
     img {
         max-width: 200px;
     }
-
 }
 
 #RepoMenue {
@@ -67,7 +66,6 @@
                 word-break: keep-all;
             }
 
-
             .description {
                 color: rgb(142, 165, 173);
                 font-size: medium;
@@ -75,7 +73,7 @@
             }
         }
 
-        .icon{
+        .icon {
             height: 70px;
             padding: 4px;
             margin-right: 10px;
@@ -86,8 +84,6 @@
             border-color: transparent;
             background-color: black;
         }
-
-
 
         img {
             position: relative;

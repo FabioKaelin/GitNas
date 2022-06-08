@@ -10,9 +10,10 @@ import random
 import os
 
 
-eel.init(os.path.join(__file__, "..", 'web') )
+eel.init(os.path.join(__file__, "..", 'web'))
 position = ["", "", 0]
 location = ""
+
 
 @eel.expose
 def getCommits():
@@ -21,8 +22,10 @@ def getCommits():
     commits = repositories[position[2]].commits
     commitsJS = []
     for commit in commits:
-        commitsJS.append([commit.message, commit.hash, commit.date.strftime("%H:%M:%S %d.%m.%Y")])
+        commitsJS.append([commit.message, commit.hash,
+                         commit.date.strftime("%H:%M:%S %d.%m.%Y")])
     return commitsJS
+
 
 @eel.expose
 def getTags():
@@ -33,12 +36,14 @@ def getTags():
     tags.reverse()
     return tags
 
+
 @eel.expose
 def updateDescription(name, description):
     for repo in repositories:
         if repo.name == name:
             repo.setDescription(description)
             break
+
 
 @eel.expose
 def getRepoNames():
@@ -48,11 +53,13 @@ def getRepoNames():
         repositories1.append(repo.replace(".git", "").lower())
     return repositories1
 
+
 @eel.expose
 def changeBranch(branch):
-    execCommandInRepoOhne(position[0], "git checkout "+ branch)
+    execCommandInRepoOhne(position[0], "git checkout " + branch)
     repositories[position[2]].load()
     return "a"
+
 
 @eel.expose
 def openSettings(location1, reponame="errk4j2ej2{[)(86*+snh4ek.-823hbndleor12353"):
@@ -63,16 +70,19 @@ def openSettings(location1, reponame="errk4j2ej2{[)(86*+snh4ek.-823hbndleor12353
         position = [reponame, position[1], position[2]]
     eel.setLocation("repoSettings.html")
 
+
 @eel.expose
 def backofSettings():
     global location
     eel.setLocation(location)
+
 
 @eel.expose
 def getUpdateFill():
     for repo in repositories:
         if repo.name == position[0]:
             return [position[0], repo.description]
+
 
 @eel.expose
 def updateRepo(description, icon):
@@ -88,9 +98,10 @@ def updateRepo(description, icon):
     global location
     eel.setLocation(location)
 
+
 @eel.expose
 def createRepo(name, beschreibung, path):
-    execSSH("git init --bare "+ name + ".git")
+    execSSH("git init --bare " + name + ".git")
     execSSH("echo '" + beschreibung + "' > " + name + ".git/description")
     global repositories
     repositories = loadRepositories()
@@ -99,7 +110,8 @@ def createRepo(name, beschreibung, path):
     loadIconsThread = Thread(target=loadIcons)
     loadIconsThread.start()
     if path == "empty":
-        img = Image.new('RGB', (200, 200), (random.randint(40,200), random.randint(40,200), random.randint(40,200)))
+        img = Image.new('RGB', (200, 200), (random.randint(
+            40, 200), random.randint(40, 200), random.randint(40, 200)))
         img.save(os.path.join(folder, "..", "..", "RepoImg.png"))
         path = os.path.join(folder, "..", "..", "RepoImg.png")
     setIconThread = Thread(target=setIcon, args=(name, path,))
@@ -107,19 +119,22 @@ def createRepo(name, beschreibung, path):
     cloneRepos.join()
     return
 
+
 @eel.expose
 def generateImage():
-    img = Image.new('RGB', (200, 200), (random.randint(40,200), random.randint(40,200), random.randint(40,200)))
+    img = Image.new('RGB', (200, 200), (random.randint(40, 200),
+                    random.randint(40, 200), random.randint(40, 200)))
     img.save(os.path.join(folder, "..", "RepoImg.png"))
-    path = os.path.join(folder,"..", "RepoImg.png")
+    path = os.path.join(folder, "..", "RepoImg.png")
     return "./RepoImg.png"
+
 
 @eel.expose
 def askImage():
     filetypes = (
-            ('images', '*.png'),
-            ('images', '*.jpeg')
-        )
+        ('images', '*.png'),
+        ('images', '*.jpeg')
+    )
     root = tk.Tk()
     root.withdraw()
     file_path = filedialog.askopenfilename(filetypes=filetypes, parent=root)
@@ -137,21 +152,21 @@ def askImage():
     else:
         im = Image.open(file_path)
         im_crop = im.crop((0, 0, width, width))
-        im_crop.save(os.path.join(folder, "..",filename), quality=95)
+        im_crop.save(os.path.join(folder, "..", filename), quality=95)
 
     return "./"+filename
+
 
 @eel.expose
 def setPosition(repo, path="", iffolder=True):
     global position
-    print("Position: "+ str(repo)+"/"+ str(path))
+    print("Position: " + str(repo)+"/" + str(path))
     oldRepo = position[0]
 
     if path[0:1] == "/":
         position = [repo, path[1:], position[2]]
     else:
         position = [repo, path, position[2]]
-
 
     output = execCommandInRepo(repo, "dir /a /B")
     if len(output.split("\n")) == 1:
@@ -169,6 +184,7 @@ def setPosition(repo, path="", iffolder=True):
         loadRepo = Thread(target=repositories[position[2]].load())
         loadRepo.start()
 
+
 @eel.expose
 def getReadme():
     global position
@@ -184,9 +200,11 @@ def getReadme():
     content = markdown.markdown(content)
     return content
 
+
 @eel.expose
 def print1(input):
     print(input)
+
 
 @eel.expose
 def getCloneEEL():
@@ -194,15 +212,16 @@ def getCloneEEL():
     reponame = position[0]
     url = getClone(reponame)
     cloneUrl = "git clone " + url
-    remoteUrl = "git remote add nas "+ url
+    remoteUrl = "git remote add nas " + url
     pushCommand = "git push -u nas main"
     jsonObject = {
         "Url": url,
         "Clone": cloneUrl,
         "Remote": remoteUrl,
         "Push": pushCommand
-        }
+    }
     return jsonObject
+
 
 @eel.expose
 def getStructureEEL():
@@ -239,7 +258,8 @@ def getStructureEEL():
 
     for element in fileJs:
         structurejs.append(element)
-    eel.displayStructure([ position, structurejs])
+    eel.displayStructure([position, structurejs])
+
 
 @eel.expose
 def getFileEEL():
@@ -264,21 +284,27 @@ def getFileEEL():
                     size = size / 1024
                     sizeString = str(round(size, 2))+" GB"
         if extensionName in imageTypes:
-            content = "<img id='FileImage' width='100%' src='./repos"+ positionString.replace(folder, "").replace("\\", "/") +"' alt='Image'>"
+            content = "<img id='FileImage' width='100%' src='./repos" + \
+                positionString.replace(folder, "").replace(
+                    "\\", "/") + "' alt='Image'>"
         else:
-            content = "Dieses Dateiformat ("+ extensionName+") wird nicht unterstützt"
+            content = "Dieses Dateiformat (" + \
+                extensionName+") wird nicht unterstützt"
         return [content, extensionName, "Uncountable", sizeString, "img"]
     else:
         text = replaceTags(input[0])
         return [text, input[1], input[2], input[3], "text"]
 
+
 @eel.expose
 def eelDownloadZip():
     DownloadZIP(position[0])
 
+
 @eel.expose
 def eelGetPath():
     return [position[0], position[1]]
+
 
 @eel.expose
 def loadRepositoriesFunc():
@@ -289,10 +315,12 @@ def loadRepositoriesFunc():
 
     print(repositories)
     for element in repositories:
-        repositoriesJs.append({"name": element.name, "description": element.description})
+        repositoriesJs.append(
+            {"name": element.name, "description": element.description})
     global position
-    position = ["","", 0]
+    position = ["", "", 0]
     eel.displayRepositories(repositoriesJs)
+
 
 @eel.expose
 def startLoading():
@@ -301,4 +329,4 @@ def startLoading():
     eel.setLocation("repos.html")
 
 
-eel.start('load.html', port=8085, size=(1000,800))
+eel.start('load.html', port=8085, size=(1000, 800))
