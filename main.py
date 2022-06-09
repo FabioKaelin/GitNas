@@ -1,16 +1,15 @@
 import PIL
 import eel
 import markdown
-from functions import *
-import zipfile
 from PIL import Image
 from tkinter import filedialog
 import tkinter as tk
 import random
 import os
-
+from functions import *
 
 eel.init(os.path.join(__file__, "..", 'web'))
+
 position = ["", "", 0]
 location = ""
 
@@ -88,6 +87,9 @@ def getUpdateFill():
 def updateRepo(description, icon):
     reponame = position[0]
     if icon != "default":
+        # if icon == "./RepoImg.png":
+        #     icon = "./web/RepoImg.png"
+        print(reponame, icon)
         setIcon(reponame, icon)
         loadIconsThread = Thread(target=loadIcons)
         loadIconsThread.start()

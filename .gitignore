@@ -28,7 +28,6 @@ ENV/
 !repoIcons
 
 */repos/*/
-!*/repos
 
 RepoImg.png
 /web/*.png
