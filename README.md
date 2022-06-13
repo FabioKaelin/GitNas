@@ -22,6 +22,6 @@ Wenn eine Konsole nicht stört, kann man `python main.py` in der Konsole eingebe
 
 Falls die Konsole stört, kann man ein `.exe` machen, und zwar wie folgt:
 
-Um ein `.exe` zu bekommen muss man `python -m eel main.py web --noconsole` in der Konsole ausführen. Falls das Paket PyInstaller noch nicht installiert ist, muss man zuerst `pip install PyInstaller` ausführen
+Um ein `.exe` zu bekommen muss man `python -m eel main.py web --noconsole -i ./web/images/logo/logo.png` in der Konsole ausführen. Falls das Paket PyInstaller noch nicht installiert ist, muss man zuerst `pip install PyInstaller` ausführen
 
 ![logo](./web/images/Schriftzug.png)
