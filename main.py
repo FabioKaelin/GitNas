@@ -87,8 +87,6 @@ def getUpdateFill():
 def updateRepo(description, icon):
     reponame = position[0]
     if icon != "default":
-        # if icon == "./RepoImg.png":
-        #     icon = "./web/RepoImg.png"
         print(reponame, icon)
         setIcon(reponame, icon)
         loadIconsThread = Thread(target=loadIcons)

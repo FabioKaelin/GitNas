@@ -66,6 +66,9 @@ load_dotenv()
 router_ip = os.getenv('ROUTER_IP')
 router_username = os.getenv('ROUTER_USERNAME')
 router_password = os.getenv('ROUTER_PASSWORD')
+remote_path = os.getenv('REMOTE_PATH')
+if remote_path[-1:] == "/": remote_path = remote_path[:-1]
+if remote_path[:1] == "/": remote_path = remote_path[1:]
 
 doubleBackslash = "\\"
 
@@ -220,7 +223,7 @@ def execSSH(command):
 
 def getClone(name):
     name = name
-    return f"ssh://{router_username}@{router_ip}:/volume1/GitNas/repository/{name}.git"
+    return f"ssh://{router_username}@{router_ip}:/{remote_path}/{name}.git"
 
 
 def updateCloneOne(repo, localRepos):
@@ -345,13 +348,13 @@ def makeBackup():
 
 
 def loadIcons():
-    command = f'pscp -pw {router_password} -r {router_username}@{router_ip}:/volume1/GitNas/repository/.icons/ {os.path.join(folder, "..", "images", "repoIcons")}'
+    command = f'pscp -pw {router_password} -r {router_username}@{router_ip}:/{remote_path}/.icons/ {os.path.join(folder, "..", "images", "repoIcons")}'
     subprocess.run(command, cwd=folder, shell=True,
                    stdout=subprocess.DEVNULL,  stderr=subprocess.STDOUT)
 
 
 def setIcon(reponame, path):
-    command = f'pscp -pw {router_password} {path} {router_username}@{router_ip}:/volume1/GitNas/repository/.icons/{reponame}.png'
+    command = f'pscp -pw {router_password} {path} {router_username}@{router_ip}:/{remote_path}/.icons/{reponame}.png'
     subprocess.run(command, cwd=os.path.join(folder,".."),shell=True, stdout=subprocess.DEVNULL,  stderr=subprocess.STDOUT)
 
 
