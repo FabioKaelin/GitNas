@@ -16,6 +16,12 @@ Ich habe im April 2022 auf meinem Nas ein Git-Server eigerichtet und möchte nun
 
 ## Starten
 
-Wenn eine Konsole nicht stört kann man `python main.py` in der Konsole eingeben oder `main.py` ausführen.
+Die Voraussetzung das das Programm funktioniert ist, das man Chrome installiert hat. Zudem musss man ein Nas-Gerät haben und diese Daten in das `.env`-File schreiben. Zudem sollte man Git-Server auf den Nas installiert haben und einen Ordner für die Repositories haben. In diesem Ordner muss ein `.icons`-Ordner sein welcher leer ist. Ebenso ist ein der Ordner für die Repositories selbst ein Repository mit einem Remote-Punkt, um ein Backup zu machen.
+
+Wenn eine Konsole nicht stört, kann man `python main.py` in der Konsole eingeben oder `main.py` ausführen.
+
+Falls die Konsole stört, kann man ein `.exe` machen, und zwar wie folgt:
+
+Um ein `.exe` zu bekommen muss man `python -m eel main.py web --noconsole` in der Konsole ausführen. Falls das Paket PyInstaller noch nicht installiert ist, muss man zuerst `pip install PyInstaller` ausführen
 
 ![logo](./web/images/Schriftzug.png)

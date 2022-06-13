@@ -8,7 +8,7 @@ import random
 import os
 from functions import *
 
-eel.init(os.path.join(__file__, "..", 'web'))
+eel.init(os.path.join(__file__, "..", 'web'), allowed_extensions=[".js", ".html", ".css", ".png", ".jpeg", ".gif", ".jpg", ".svg", ".pdf"])
 
 position = ["", "", 0]
 location = ""
@@ -170,9 +170,8 @@ def setPosition(repo, path="", iffolder=True):
 
     output = execCommandInRepo(repo, "dir /a /B")
     if len(output.split("\n")) == 1:
-
         eel.setLocation("emptyRepo.html")
-    elif not iffolder:
+    elif not os.path.isdir(os.path.join(folder, repo, position[1])):
         eel.setLocation("editor.html")
     else:
         eel.setLocation("explorer.html")
