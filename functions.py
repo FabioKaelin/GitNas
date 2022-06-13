@@ -233,8 +233,7 @@ def updateCloneOne(repo, localRepos):
             execCommandInRepoOhne(repo, "git restore .")
         except Exception as e:
             pass
-        if (len(execCommandInRepo("GitGui", "git status").split("\n")) != 4):
-            execCommandInRepoOhne(repo, "git pull")
+        execCommandInRepoOhne(repo, "git pull")
     else:
         execCommandInFolderOhne("git clone "+getClone(repo))
     for line in execCommandInRepo(repo, "git branch -a").split("\n")[:-1]:
